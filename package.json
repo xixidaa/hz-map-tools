@@ -6,7 +6,9 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "lint:script": "eslint --ext .js,.jsx,.vue, --fix --quiet ./",
+    "lint": "npm run lint:script && npm run lint:style",
+    "lint:style": "stylelint --fix \"src/**/*.{css,scss}\"",
     "prepare": "husky install"
   },
   "lint-staged": {
@@ -14,7 +16,7 @@
       "npm run lint:script",
       "git add ."
     ],
-    "**/*.{css,scss}": [
+    "**/*.{scss}": [
       "npm run lint:style",
       "git add ."
     ]

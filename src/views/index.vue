@@ -1,7 +1,16 @@
 <template>
-  <div>测试页面</div>
+  <div class="main">测试页面</div>
 </template>
 
-<script setup></script>
+<script setup>
+import { onMounted } from 'vue'
+onMounted(() => {
+  console.log('chufa')
+})
+</script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.main {
+  background-color: #fff;
+}
+</style>
