@@ -1,0 +1,11 @@
+###
+ # @Author: WangNing
+ # @Date: 2022-12-27 19:25:37
+ # @LastEditors: WangNing
+ # @LastEditTime: 2022-12-27 19:28:03
+ # @FilePath: /hz-map-tools/.husky/pre-commit
+### 
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+npm run lint
