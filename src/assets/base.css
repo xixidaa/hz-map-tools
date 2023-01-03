@@ -1,13 +1,13 @@
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    outline: 0;
-    font-size: 100%;
-    vertical-align: baseline;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
 }
 
 html,
@@ -25,15 +25,15 @@ body {
   display: block;
   width: 4px !important;
   height: 4px !important;
-  /*background: var(--seatom-mono-200) !important;*/
-  background: rgba(30, 30, 30, .1) !important;
+
+  /* background: var(--seatom-mono-200) !important; */
+  background: rgb(30 30 30 / 10%) !important;
 }
 
 ::-webkit-scrollbar-thumb {
   /* 全局修改颜色时 在编辑页面 会不适配
   // background-color: var(--seatom-mono-a500) !important;
-  border: unset !important;*/
+  border: unset !important; */
   background-color: #434b55 !important;
   border: 1px solid #434b55 !important;
 }
-
