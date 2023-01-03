@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2022-12-27 19:43:29
  * @LastEditors: WangNing
- * @LastEditTime: 2022-12-27 20:00:46
+ * @LastEditTime: 2023-01-03 16:00:55
  * @FilePath: /hz-map-tools/.stylelintrc.cjs
  */
 module.exports = {
@@ -11,9 +11,8 @@ module.exports = {
     // 继承一系列规则集合
     extends: [
         // standard 规则集合
-        'stylelint-config-standard',
-        // standard 规则集合的 scss 版本
-        'stylelint-config-standard-scss'
+        "stylelint-config-standard-scss",
+        "stylelint-config-recommended-vue/scss",
     ],
     // 配置 rules
     rules: {

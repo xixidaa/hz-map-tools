@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2022-12-28 18:52:46
  * @LastEditors: WangNing
- * @LastEditTime: 2022-12-28 18:52:55
+ * @LastEditTime: 2023-01-03 15:56:46
  * @FilePath: /hz-map-tools/src/views/PointPicker.vue
 -->
 <template>
@@ -11,4 +11,8 @@
 
 <script setup></script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.aa {
+  height: 100px;
+}
+</style>

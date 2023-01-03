@@ -6,7 +6,10 @@
  * @FilePath: /hz-map-tools/src/views/AreaGenerator.vue
 -->
 <template>
-  <div>这是行政编辑生成页面</div>
+  <div>
+    这是行政编辑生成页面
+    <MaptalksMap></MaptalksMap>
+  </div>
 </template>
 
 <script setup></script>
