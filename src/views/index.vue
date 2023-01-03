@@ -27,17 +27,20 @@
 @import '../assets/coverElement.scss';
 .common-layout {
   height: 100%;
+
   .header-left-logo {
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
   }
+
   .layout-header-wrapper {
     display: flex;
     background: #545c64;
   }
 }
+
 .main-container {
   background: #000;
 }

@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2022-12-27 14:36:37
  * @LastEditors: WangNing
- * @LastEditTime: 2022-12-28 15:55:36
+ * @LastEditTime: 2023-01-03 19:10:22
  * @FilePath: /hz-map-tools/vite.config.js
  * @Description:
  */
@@ -12,6 +12,7 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import viteStylelint from 'vite-plugin-stylelint'
 
 export default defineConfig({
   plugins: [
@@ -21,7 +22,8 @@ export default defineConfig({
     }),
     Components({
       resolvers: [ElementPlusResolver()]
-    })
+    }),
+    viteStylelint()
   ],
   resolve: {
     alias: {

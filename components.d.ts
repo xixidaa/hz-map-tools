@@ -16,7 +16,9 @@ declare module '@vue/runtime-core' {
     ElRow: typeof import('element-plus/es')['ElRow']
     MaptalksMap: typeof import('./src/components/MaptalksMap.vue')['default']
     NavBar: typeof import('./src/components/NavBar.vue')['default']
+    PointPickerContainer: typeof import('./src/components/PointPickerContainer.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SpaceDrawContainer: typeof import('./src/components/SpaceDrawContainer.vue')['default']
   }
 }
