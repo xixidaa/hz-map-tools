@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2022-12-28 16:16:32
  * @LastEditors: WangNing
- * @LastEditTime: 2022-12-28 16:22:47
+ * @LastEditTime: 2023-01-03 16:04:03
  * @FilePath: /hz-map-tools/src/views/AreaGenerator.vue
 -->
 <template>
@@ -14,4 +14,8 @@
 
 <script setup></script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.aa {
+  height: 100px;
+}
+</style>
