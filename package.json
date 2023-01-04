@@ -22,6 +22,9 @@
     ]
   },
   "dependencies": {
+    "@maptalks/gl": "^0.80.0",
+    "@maptalks/gl-layers": "^0.17.0",
+    "@maptalks/vt": "^0.78.2",
     "axios": "^1.2.1",
     "babel-eslint": "^10.1.0",
     "element-plus": "^2.2.27",
