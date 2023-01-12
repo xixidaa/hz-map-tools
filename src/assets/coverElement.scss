@@ -7,3 +7,38 @@
 .el-main {
   --el-main-padding: 0;
 }
+
+/* 弹窗样式覆写 start */
+.el-dialog {
+  --el-dialog-width: 30%;
+  background: #242730;
+  box-shadow: 0 16px 32px -6px rgba(4, 8, 16, 64%), 0 3px 8px -2px rgba(4, 8, 16, 48%), 0 0 1px rgba(4, 8, 16, 32%);
+  border-radius: 8px;
+}
+
+.el-dialog .el-dialog__title {
+  color: rgba(255, 255, 255, 70%);
+  font-size: 14px;
+  font-weight: 600;
+}
+.el-dialog .el-dialog__headerbtn {
+  top: 12px;
+}
+.el-dialog .el-dialog__headerbtn .el-dialog__close {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 70%);
+  transition: transform 0.3s linear;
+}
+.el-dialog .el-dialog__headerbtn .el-dialog__close:hover {
+  transform: rotate(180deg);
+}
+.el-dialog .el-dialog__body {
+  padding: 20px;
+  color: rgba(255, 255, 255, 70%);
+}
+.el-dialog .el-dialog__footer {
+  padding: 10px 20px 12px;
+  font-weight: 600;
+}
+
+/* 弹窗样式覆写 end */

@@ -7,18 +7,31 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    ElButton: typeof import('element-plus/es')['ElButton']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElContainer: typeof import('element-plus/es')['ElContainer']
+    ElDialog: typeof import('element-plus/es')['ElDialog']
+    ElForm: typeof import('element-plus/es')['ElForm']
+    ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElHeader: typeof import('element-plus/es')['ElHeader']
+    ElIcon: typeof import('element-plus/es')['ElIcon']
+    ElInput: typeof import('element-plus/es')['ElInput']
     ElMain: typeof import('element-plus/es')['ElMain']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
+    ElOption: typeof import('element-plus/es')['ElOption']
     ElRow: typeof import('element-plus/es')['ElRow']
+    ElSelect: typeof import('element-plus/es')['ElSelect']
+    ElUpload: typeof import('element-plus/es')['ElUpload']
+    GeojsonValid: typeof import('./src/components/GeojsonValid.vue')['default']
+    GeojsonValidDialog: typeof import('./src/components/GeojsonValidDialog.vue')['default']
+    GeojsonWktTrans: typeof import('./src/components/GeojsonWktTrans.vue')['default']
     MaptalksMap: typeof import('./src/components/MaptalksMap.vue')['default']
     NavBar: typeof import('./src/components/NavBar.vue')['default']
     PointPickerContainer: typeof import('./src/components/PointPickerContainer.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SpaceDrawContainer: typeof import('./src/components/SpaceDrawContainer.vue')['default']
+    SpaceTooltip: typeof import('./src/components/DrawRelated/SpaceTooltip.vue')['default']
   }
 }

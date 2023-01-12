@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2022-12-27 19:43:29
  * @LastEditors: WangNing
- * @LastEditTime: 2023-01-03 19:48:14
+ * @LastEditTime: 2023-01-12 21:08:10
  * @FilePath: /hz-map-tools/.stylelintrc.cjs
  */
 module.exports = {
@@ -29,6 +29,9 @@ module.exports = {
         "rule-empty-line-before": null, 
         'scss/at-import-partial-extension': null, // 是否隐藏导入scss文件后缀名
         'declaration-block-trailing-semicolon': null, // 每个属性声明末尾都要加分号
-        'selector-class-pattern': null // 命名规范
+        'selector-class-pattern': null, // 命名规范
+        "color-function-notation": null, // 取消rgba小数点报错
+        "declaration-empty-line-before": null,
+        "max-line-length": null
     }
 }

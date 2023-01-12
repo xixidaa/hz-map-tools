@@ -1,3 +1,10 @@
+/*
+ * @Author: WangNing
+ * @Date: 2023-01-03 19:44:45
+ * @LastEditors: WangNing
+ * @LastEditTime: 2023-01-12 21:07:26
+ * @FilePath: /hz-map-tools/.eslintrc.cjs
+ */
 /* eslint-env node */
 require('@rushstack/eslint-patch/modern-module-resolution')
 

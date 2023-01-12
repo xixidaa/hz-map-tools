@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2022-12-27 14:36:37
  * @LastEditors: WangNing
- * @LastEditTime: 2023-01-03 19:10:22
+ * @LastEditTime: 2023-01-12 15:35:32
  * @FilePath: /hz-map-tools/vite.config.js
  * @Description:
  */
@@ -18,10 +18,14 @@ export default defineConfig({
   plugins: [
     vue(),
     AutoImport({
-      resolvers: [ElementPlusResolver()]
+      resolvers: [ElementPlusResolver({
+        importStyle: false
+      })]
     }),
     Components({
-      resolvers: [ElementPlusResolver()]
+      resolvers: [ElementPlusResolver({
+        importStyle: false
+      })]
     }),
     viteStylelint()
   ],

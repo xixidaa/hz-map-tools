@@ -1,3 +1,10 @@
+<!--
+ * @Author: WangNing
+ * @Date: 2023-01-03 19:44:45
+ * @LastEditors: WangNing
+ * @LastEditTime: 2023-01-12 16:24:11
+ * @FilePath: /hz-map-tools/src/views/index.vue
+-->
 <template>
   <el-container class="common-layout">
     <el-header class="layout-header-wrapper">
@@ -24,7 +31,7 @@
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/coverElement.scss';
+// @import '../assets/coverElement.scss';
 .common-layout {
   height: 100%;
 
@@ -42,6 +49,6 @@
 }
 
 .main-container {
-  background: #000;
+  background: #fff;
 }
 </style>

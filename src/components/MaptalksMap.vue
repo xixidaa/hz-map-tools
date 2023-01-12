@@ -1,13 +1,13 @@
 <template>
   <div id="map-container" class="map-container"></div>
   <!-- 行政边界生成器 -->
-  <SpaceDrawContainer v-if="props.toolType === 'areaGenerator'"></SpaceDrawContainer>
+  <SpaceDrawContainer v-if="show && props.toolType === 'areaGenerator'"></SpaceDrawContainer>
   <!-- 地图点位拾取器 -->
-  <PointPickerContainer v-if="props.toolType === 'pointPick'"></PointPickerContainer>
+  <PointPickerContainer v-if="show && props.toolType === 'pointPick'"></PointPickerContainer>
 </template>
 
 <script setup>
-import { onMounted, defineProps, onBeforeUnmount, provide } from 'vue'
+import { onMounted, defineProps, onBeforeUnmount, provide, ref } from 'vue'
 import CreateMap from '@/utils/map.js'
 const props = defineProps({
   toolType: {
@@ -16,6 +16,7 @@ const props = defineProps({
     default: ''
   }
 })
+const show = ref(false)
 let globalMap
 onMounted(() => {
   globalMap = new CreateMap()
@@ -29,6 +30,9 @@ onMounted(() => {
     }
   })
   let map = globalMap.getMap()
+  if (map.isLoaded()) {
+    show.value = true
+  }
   provide('map', map)
 })
 

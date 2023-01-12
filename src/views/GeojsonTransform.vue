@@ -6,7 +6,7 @@
  * @FilePath: /hz-map-tools/src/views/GeojsonTransform.vue
 -->
 <template>
-  <div>geojson互转</div>
+  <GeojsonWktTrans></GeojsonWktTrans>
 </template>
 
 <script setup></script>
