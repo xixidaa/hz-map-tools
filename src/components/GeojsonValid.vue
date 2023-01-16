@@ -31,8 +31,9 @@
 <script setup>
 import { ref } from "vue";
 import { ElMessage } from "element-plus";
-import geojsonhint from "@mapbox/geojsonhint";
+import { useGeojsonValidate } from "../hooks/useGeojsonValidate";
 
+const { geoTest } = useGeojsonValidate();
 const textarea = ref("");
 const dialogVisible = ref(false);
 const errContent = ref([]);
@@ -41,22 +42,7 @@ const validateGeojson = () => {
   if (!textarea.value) {
     return ElMessage.warning("请输入需要校验的geojson");
   }
-  const res = geojsonhint.hint(textarea.value, {});
-  if (res.length === 0) {
-    // 合法geojson
-    errContent.value = [
-      {
-        message: "合法的geojson",
-      },
-    ];
-  } else {
-    errContent.value = res.map((item) => {
-      return {
-        message: `line: ${item.line}  ====> ${item.message}`,
-      };
-    });
-    errContent.value.unshift({ message: "geojson校验失败！" });
-  }
+  errContent.value = geoTest(textarea.value).errContent;
   dialogVisible.value = true;
 };
 </script>
@@ -65,6 +51,7 @@ const validateGeojson = () => {
 .geojson-valid-wrrap {
   width: 100%;
   height: 100%;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -80,9 +67,9 @@ const validateGeojson = () => {
   }
   .valid-btn-box {
     height: 8%;
-    padding: 10px;
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     .valid-btn {
       width: 100px;
     }

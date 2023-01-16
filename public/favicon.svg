@@ -1,0 +1,12 @@
+<svg width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="3.94" height="3.94" rx="1.97" transform="scale(-1 1) rotate(-30 40.845 23.708)" fill="#08F2FB" />
+    <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M14.853 4.985a1.97 1.97 0 01.721 2.691l-2.322 4.023c-.34.59-.174 1.342.384 1.733a1.97 1.97 0 01-2.26 3.227.787.787 0 00-1.133.251l-2.22 3.845a1.97 1.97 0 11-3.412-1.97l7.551-13.079a1.97 1.97 0 012.691-.721z"
+        fill="#00B1B8" />
+    <rect x="17.416" y="6.627" width="3.94" height="3.94" rx="1.97" transform="rotate(-30 17.416 6.627)"
+        fill="#08F2FB" />
+    <rect width="3.94" height="13.351" rx="1.97" transform="scale(-1 1) rotate(-30 19.38 45.753)" fill="#00B1B8" />
+    <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M21.748 10.191a1.97 1.97 0 00-.721 2.69l2.04 3.534c.235.407.235.907 0 1.314l-3.353 5.807a1.97 1.97 0 103.412 1.97l1.457-2.524a1.313 1.313 0 012.275 0l.735 1.273a1.97 1.97 0 003.412-1.97L24.44 10.912a1.97 1.97 0 00-2.691-.721z"
+        fill="#08F2FB" />
+</svg>

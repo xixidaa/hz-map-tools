@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-01-12 14:37:42
  * @LastEditors: WangNing
- * @LastEditTime: 2023-01-12 15:57:29
+ * @LastEditTime: 2023-01-16 14:55:13
  * @FilePath: /hz-map-tools/src/components/GeojsonValidDialog.vue
  * @Desc: geojson校验结果弹窗
 -->
@@ -15,7 +15,6 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
 const props = defineProps({
   errContent: {
     type: Array,

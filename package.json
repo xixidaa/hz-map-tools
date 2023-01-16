@@ -23,25 +23,30 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.10",
-    "@mapbox/geojsonhint": "^3.1.0",
+    "@mapbox/geojsonhintesm": "^3.1.8",
     "@maptalks/gl": "^0.80.0",
     "@maptalks/gl-layers": "^0.17.0",
     "@maptalks/vt": "^0.78.2",
+    "@terraformer/wkt": "^2.1.2",
     "axios": "^1.2.1",
     "babel-eslint": "^10.1.0",
     "element-plus": "^2.2.27",
+    "is-wkt": "^0.0.1",
     "lodash-es": "^4.17.21",
     "maptalks": "^1.0.0-rc.17",
     "mitt": "^3.0.0",
+    "nprogress": "^0.2.0",
     "pinia": "^2.0.28",
     "sass": "^1.57.1",
     "stylelint-prettier": "^2.0.0",
+    "vite": "^4.1.0-beta.0",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
+    "@rollup/plugin-commonjs": "^24.0.0",
     "@rushstack/eslint-patch": "^1.1.4",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/eslint-config-prettier": "^7.0.0",
@@ -62,7 +67,6 @@
     "stylelint-config-standard-vue": "^1.0.0",
     "unplugin-auto-import": "^0.12.1",
     "unplugin-vue-components": "^0.22.12",
-    "vite": "^4.0.0",
     "vite-plugin-stylelint": "^4.1.4"
   }
 }

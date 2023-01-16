@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2022-12-27 19:43:29
  * @LastEditors: WangNing
- * @LastEditTime: 2023-01-12 21:08:10
+ * @LastEditTime: 2023-01-13 18:48:07
  * @FilePath: /hz-map-tools/.stylelintrc.cjs
  */
 module.exports = {
@@ -32,6 +32,7 @@ module.exports = {
         'selector-class-pattern': null, // 命名规范
         "color-function-notation": null, // 取消rgba小数点报错
         "declaration-empty-line-before": null,
-        "max-line-length": null
+        "max-line-length": null,
+        "alpha-value-notation": null
     }
 }

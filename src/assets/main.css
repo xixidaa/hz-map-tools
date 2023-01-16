@@ -4,3 +4,15 @@
   font-weight: normal;
   height: 100%;
 }
+
+::-webkit-scrollbar {
+  display: block;
+  width: 4px !important;
+  height: 4px !important;
+  background: rgba(30, 30, 30, 0.1) !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #434b55 !important;
+  border: 1px solid #434b55 !important;
+}
