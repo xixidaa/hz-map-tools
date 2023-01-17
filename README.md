@@ -2,12 +2,13 @@
  * @Author: WangNing
  * @Date: 2022-12-27 14:36:37
  * @LastEditors: WangNing
- * @LastEditTime: 2022-12-27 19:30:39
+ * @LastEditTime: 2023-01-17 16:33:07
  * @FilePath: /hz-map-tools/README.md
 -->
+
 # hz-map-tools
 
-This template should help get you started developing with Vue 3 in Vite.
+海致 Gis 地图辅助工具
 
 ## Recommended IDE Setup
 
@@ -40,6 +41,7 @@ npm run build
 ```sh
 npm run lint
 ```
+
 ### 代码提交规范
 
 build 影响项目构建或依赖项修改
@@ -53,3 +55,14 @@ refactor 代码重构
 revert 恢复上一次提交
 style 代码格式修改
 test 测试用例新增、修改
+
+### lint-stage 校验报错后代码不在暂存区？
+
+lint-staged 从 v10.0.0 起，使用 git stash 来提高速度并在运行时提供备份，使用 git stash pop 取出代码，修改问题后再提交
+详情： https://github.com/okonet/lint-staged/pull/724
+
+### element-plus icon 怎么用？
+
+项目已配置自动导入 element-plus icon，复制 icon 名(不限大小写)，<i-ep-icon 名>即可
+icon 最佳实践：https://github.com/sxzz/element-plus-best-practices
+自动导入方式比官网推荐全局注册方式构建体积小 200k 左右

@@ -24,6 +24,7 @@ declare module '@vue/runtime-core' {
     GeojsonValid: typeof import('./src/components/GeojsonValid.vue')['default']
     GeojsonValidDialog: typeof import('./src/components/GeojsonValidDialog.vue')['default']
     GeojsonWktTrans: typeof import('./src/components/GeojsonWktTrans.vue')['default']
+    IEpUploadFilled: typeof import('~icons/ep/upload-filled')['default']
     MaptalksMap: typeof import('./src/components/MaptalksMap.vue')['default']
     NavBar: typeof import('./src/components/NavBar.vue')['default']
     PointPickerContainer: typeof import('./src/components/PointPickerContainer.vue')['default']

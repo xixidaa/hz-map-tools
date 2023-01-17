@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2022-12-27 14:36:37
  * @LastEditors: WangNing
- * @LastEditTime: 2023-01-16 15:03:07
+ * @LastEditTime: 2023-01-17 16:17:54
  * @FilePath: /hz-map-tools/vite.config.js
  * @Description:
  */
@@ -14,6 +14,32 @@ import vue from '@vitejs/plugin-vue'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import viteStylelint from 'vite-plugin-stylelint'
 import commonjs from '@rollup/plugin-commonjs'
+import visualizer from 'rollup-plugin-visualizer' // 打包分析
+import viteCompression from 'vite-plugin-compression' // gzip压缩
+import IconsResolver from 'unplugin-icons/resolver'
+import Icons from 'unplugin-icons/vite'
+
+const NODE_ENV = process.env.NODE_ENV
+const prodPlugins = []
+
+// 打包生产环境才引入的插件
+if (NODE_ENV === 'production') {
+  // 打包依赖展示
+  prodPlugins.push(
+    visualizer({
+      open: false,
+      gzipSize: true,
+      brotliSize: true
+    }),
+    viteCompression({
+      verbose: true,
+      disable: false,
+      threshold: 10240,
+      algorithm: 'gzip',
+      ext: '.gz'
+    })
+  )
+}
 
 export default defineConfig({
   plugins: [
@@ -22,21 +48,26 @@ export default defineConfig({
       resolvers: [
         ElementPlusResolver({
           importStyle: false
-        })
+        }),
+        IconsResolver({})
       ]
     }),
     Components({
       resolvers: [
         ElementPlusResolver({
           importStyle: false
+        }),
+        IconsResolver({
+          enabledCollections: ['ep']
         })
       ]
     }),
+    Icons({
+      autoInstall: true
+    }),
     viteStylelint(),
-    commonjs({
-      // dynamicRequireTargets: ['node_modules/@mapbox/geojsonhint.esm.js'],
-      // esmExternals: true
-    }) // 兼容vite中的cjs导入语法
+    commonjs({}), // 兼容vite中的cjs导入语法
+    ...prodPlugins
   ],
   resolve: {
     alias: {
@@ -72,7 +103,7 @@ export default defineConfig({
         manualChunks: {
           'lodash-es': ['lodash-es'],
           'element-plus': ['element-plus'],
-          axios: ['axios'],
+          // axios: ['axios'],
           maptalks: ['maptalks'],
           'vue-router': ['vue-router']
         },

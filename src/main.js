@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2022-12-27 14:36:37
  * @LastEditors: WangNing
- * @LastEditTime: 2023-01-16 10:05:49
+ * @LastEditTime: 2023-01-17 16:22:08
  * @FilePath: /hz-map-tools/src/main.js
  * @Description:
  */
@@ -16,13 +16,9 @@ import 'element-plus/dist/index.css'
 import './assets/main.css'
 import '../node_modules/maptalks/dist/maptalks.css'
 import './assets/coverElement.scss'
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import 'utils/nprogress.js'
 
 const app = createApp(App)
-for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-  app.component(key, component)
-}
 
 app.use(createPinia())
 app.use(router)

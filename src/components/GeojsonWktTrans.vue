@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-01-12 17:20:12
  * @LastEditors: WangNing
- * @LastEditTime: 2023-01-16 13:21:30
+ * @LastEditTime: 2023-01-17 16:25:34
  * @FilePath: /hz-map-tools/src/components/GeojsonWktTrans.vue
 -->
 <template>
@@ -20,7 +20,8 @@
         :limit="10"
         :on-exceed="handleExceed"
       >
-        <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+        <!-- 自动导入element-plus icon，复制icon名(不限大小写)，<i-ep-icon名>即可 -->
+        <el-icon class="el-icon--upload"><i-ep-upload-filled /></el-icon>
         <div class="el-upload__text">
           请拖拽或点击上传geojson或者wkt格式的json文件，支持多选
         </div>
