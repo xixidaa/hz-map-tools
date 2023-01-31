@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2022-12-27 14:36:37
  * @LastEditors: WangNing
- * @LastEditTime: 2023-01-17 16:17:54
+ * @LastEditTime: 2023-01-30 16:56:39
  * @FilePath: /hz-map-tools/vite.config.js
  * @Description:
  */
@@ -57,6 +57,7 @@ export default defineConfig({
         ElementPlusResolver({
           importStyle: false
         }),
+        // element-plus icon自动导入
         IconsResolver({
           enabledCollections: ['ep']
         })

@@ -12,6 +12,7 @@
 
 html,
 body {
+  min-width: 900px;
   overflow: hidden;
   height: 100%;
   width: 100%;

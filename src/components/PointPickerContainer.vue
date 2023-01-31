@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-01-03 18:28:35
  * @LastEditors: WangNing
- * @LastEditTime: 2023-01-12 11:59:52
+ * @LastEditTime: 2023-01-18 18:03:11
  * @FilePath: /hz-map-tools/src/components/PointPickerContainer.vue
 -->
 <template>
@@ -39,6 +39,10 @@
       </el-form>
     </div>
   </SpaceTooltip>
+
+  <Teleport to=".point-pick-wrapper">
+    <SelectArea></SelectArea>
+  </Teleport>
 </template>
 
 <script setup>
@@ -182,14 +186,14 @@ const buttonStatus = (val) => {
 
       var downloadElement = document.createElement("a");
       var data = JSON.stringify(geojson);
-      //encodeURIComponent解决中文乱码
-      let uri = "data:text/csv;charset=utf-8,\ufeff" + encodeURIComponent(data);
-      downloadElement.href = uri;
+      const blob = new Blob([data], { type: "plain/text" });
+      let url = URL.createObjectURL(blob);
+      downloadElement.href = url;
       downloadElement.download = `${tooltipData.name}.json`;
       document.body.appendChild(downloadElement);
       downloadElement.click();
       document.body.removeChild(downloadElement);
-      window.URL.revokeObjectURL(uri);
+      window.URL.revokeObjectURL(url);
 
       const [marker] = locusExtendObject.addPanel({
         name: tooltipData.name,

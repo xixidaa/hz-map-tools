@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-01-03 19:44:45
  * @LastEditors: WangNing
- * @LastEditTime: 2023-01-12 16:24:11
+ * @LastEditTime: 2023-01-18 18:07:37
  * @FilePath: /hz-map-tools/src/views/index.vue
 -->
 <template>
@@ -49,6 +49,7 @@
 }
 
 .main-container {
+  position: relative;
   background: #fff;
 }
 </style>

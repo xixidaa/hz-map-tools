@@ -2,11 +2,11 @@
  * @Author: WangNing
  * @Date: 2023-01-03 16:05:06
  * @LastEditors: WangNing
- * @LastEditTime: 2023-01-12 21:04:38
+ * @LastEditTime: 2023-01-18 18:03:31
  * @FilePath: /hz-map-tools/src/utils/map.js
  */
 import * as maptalks from 'maptalks'
-// import { VectorTileLayer } from '@maptalks/gl-layers';
+// import { VectorTileLayer } from '@maptalks/gl-layers'
 export default class CreateMap {
   constructor(id = 'map') {
     this.id = id
@@ -30,9 +30,9 @@ export default class CreateMap {
     // 创建地图实例
     this.map = new maptalks.Map(this.id, {
       center: [116.39747, 39.908823],
-      zoom: 12,
+      zoom: 4,
       pitch: 0,
-      minZoom: 1,
+      minZoom: 3,
       maxZoom: 18,
       maxPitch: 70, //最大倾斜角度
       doubleClickZoom: false,
@@ -50,7 +50,7 @@ export default class CreateMap {
     //   urlTemplate: 'http://tile.maptalks.com/test/planet-single/{z}/{x}/{y}.mvt',
     //   spatialReference: 'preset-vt-3857',
     //   style: '/src/assets/vtMapRes/style.json'
-    // }).addTo(this.map);
+    // }).addTo(this.map)
   }
   getMap() {
     return this.map
