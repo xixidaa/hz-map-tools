@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2022-12-27 14:36:37
  * @LastEditors: WangNing
- * @LastEditTime: 2023-01-30 16:56:39
+ * @LastEditTime: 2023-02-01 15:10:51
  * @FilePath: /hz-map-tools/vite.config.js
  * @Description:
  */
@@ -13,7 +13,6 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import viteStylelint from 'vite-plugin-stylelint'
-import commonjs from '@rollup/plugin-commonjs'
 import visualizer from 'rollup-plugin-visualizer' // 打包分析
 import viteCompression from 'vite-plugin-compression' // gzip压缩
 import IconsResolver from 'unplugin-icons/resolver'
@@ -67,7 +66,6 @@ export default defineConfig({
       autoInstall: true
     }),
     viteStylelint(),
-    commonjs({}), // 兼容vite中的cjs导入语法
     ...prodPlugins
   ],
   resolve: {
@@ -112,6 +110,7 @@ export default defineConfig({
         entryFileNames: 'static/js/[name]-[hash].js',
         assetFileNames: 'static/[ext]/[name]-[hash].[ext]'
       }
-    }
+    },
+    reportCompressedSize: false // 关闭gzip压缩大小报告
   }
 })

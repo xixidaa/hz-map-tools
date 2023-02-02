@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-01-18 18:00:07
  * @LastEditors: WangNing
- * @LastEditTime: 2023-01-31 19:21:13
+ * @LastEditTime: 2023-02-02 10:10:29
  * @FilePath: /hz-map-tools/src/components/SelectArea.vue
 -->
 <template>
@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import { ref, inject } from "vue";
+import { ref, inject, onUnmounted } from "vue";
 import { PROVINCE_COORDINATES_MAP } from "utils/constent";
 import { GeoJSONVectorTileLayer, GroupGLLayer } from "@maptalks/gl-layers";
 
@@ -47,11 +47,11 @@ const flyToArea = async (currSelectCity = {}) => {
   const { adcode } = currSelectCity;
   try {
     // 请求datav边界数据
-    const geojson = await fetch(
-      `https://geo.datav.aliyun.com/areas_v3/bound/${adcode}.json`
-    ).then((res) => {
-      return res.json();
-    });
+    const geojson = await fetch(`http://123.126.105.33:4100/geojson/${adcode}.json`).then(
+      (res) => {
+        return res.json();
+      }
+    );
 
     if (geojson) {
       drawGeojson(geojson);
@@ -61,7 +61,9 @@ const flyToArea = async (currSelectCity = {}) => {
   }
 };
 const removeGeojson = () => {
-  groupLayer && groupLayer.removeLayer("geoLayer");
+  if (groupLayer) {
+    groupLayer.removeLayer("geoLayer");
+  }
 };
 
 const drawGeojson = (geojson = "") => {
@@ -94,6 +96,11 @@ const drawGeojson = (geojson = "") => {
 
   groupLayer.addLayer(geoLayer);
 };
+
+onUnmounted(() => {
+  removeGeojson();
+  groupLayer && groupLayer.remove();
+});
 </script>
 
 <style lang="scss" scoped>
