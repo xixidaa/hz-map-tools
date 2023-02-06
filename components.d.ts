@@ -7,6 +7,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    'Button.ce': typeof import('./src/components/CustomElementComps/Button.ce.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElContainer: typeof import('element-plus/es')['ElContainer']
@@ -30,6 +31,7 @@ declare module '@vue/runtime-core' {
     MaptalksMap: typeof import('./src/components/MaptalksMap.vue')['default']
     NavBar: typeof import('./src/components/NavBar.vue')['default']
     PointPickerContainer: typeof import('./src/components/PointPickerContainer.vue')['default']
+    PointTools: typeof import('./src/components/PointTools.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SelectArea: typeof import('./src/components/SelectArea.vue')['default']

@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2022-12-27 14:36:37
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-01 15:10:51
+ * @LastEditTime: 2023-02-03 17:29:46
  * @FilePath: /hz-map-tools/vite.config.js
  * @Description:
  */
@@ -42,7 +42,13 @@ if (NODE_ENV === 'production') {
 
 export default defineConfig({
   plugins: [
-    vue(),
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag.includes('hz-ce')
+        }
+      }
+    }),
     AutoImport({
       resolvers: [
         ElementPlusResolver({

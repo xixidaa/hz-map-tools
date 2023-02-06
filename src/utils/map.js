@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-01-03 16:05:06
  * @LastEditors: WangNing
- * @LastEditTime: 2023-01-18 18:03:31
+ * @LastEditTime: 2023-02-02 16:43:12
  * @FilePath: /hz-map-tools/src/utils/map.js
  */
 import * as maptalks from 'maptalks'
@@ -36,7 +36,7 @@ export default class CreateMap {
       maxZoom: 18,
       maxPitch: 70, //最大倾斜角度
       doubleClickZoom: false,
-      zoomControl: true,
+      zoomControl: false,
       baseLayer: new maptalks.GroupTileLayer('base', [
         new maptalks.TileLayer('autonavi', {
           visible: true,

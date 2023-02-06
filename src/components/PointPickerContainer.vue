@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-01-03 18:28:35
  * @LastEditors: WangNing
- * @LastEditTime: 2023-01-18 18:03:11
+ * @LastEditTime: 2023-02-06 16:17:41
  * @FilePath: /hz-map-tools/src/components/PointPickerContainer.vue
 -->
 <template>
@@ -12,208 +12,177 @@
     v-show="tooltipData.show"
     @buttonEvent="buttonStatus"
   >
-    <div>
-      <el-form :model="tooltipData" ref="formRef">
-        <div class="tooltip-item">
-          <span>点位名称</span>
-          <el-form-item prop="name">
-            <el-input
-              v-model="tooltipData.name"
-              class="space-value"
-              maxlength="20"
-              clearable
-            ></el-input>
-          </el-form-item>
-        </div>
-        <div class="tooltip-item">
-          <span>点位数值</span>
-          <el-form-item prop="scale">
-            <el-input
-              v-model="tooltipData.scale"
-              class="range-value"
-              maxlength="5"
-              clearable
-            ></el-input>
-          </el-form-item>
-        </div>
-      </el-form>
-    </div>
+    <el-form :model="tooltipData" ref="formRef">
+      <div class="tooltip-item">
+        <span>点位名称</span>
+        <el-form-item prop="name">
+          <el-input v-model="tooltipData.name" class="space-value" maxlength="20" clearable></el-input>
+        </el-form-item>
+      </div>
+      <div class="tooltip-item">
+        <span>点位数值</span>
+        <el-form-item prop="scale">
+          <el-input v-model="tooltipData.scale" class="range-value" maxlength="5" clearable></el-input>
+        </el-form-item>
+      </div>
+    </el-form>
   </SpaceTooltip>
 
   <Teleport to=".point-pick-wrapper">
     <SelectArea></SelectArea>
+    <PointTools @startDraw="startDraw" @endDraw="endDraw" @operationChange="operationChange"></PointTools>
   </Teleport>
 </template>
 
 <script setup>
-import * as maptalks from "maptalks";
-import { onMounted, inject, reactive, ref } from "vue";
-import UserDefineArea from "./DrawRelated/userDefineArea";
-const locusExtendObject = new UserDefineArea("drawLayerLocusExtend");
-let map = inject("map");
-let locusExtendLayer;
+import * as maptalks from 'maptalks'
+import { onMounted, inject, reactive, ref } from 'vue'
+import UserDefineArea from './DrawRelated/userDefineArea'
+const locusExtendObject = new UserDefineArea('drawLayerLocusExtend')
+let map = inject('map')
+let locusExtendLayer
 const layerObject = {
-  bufferLayer: {
-    layer: null,
-    circle: null,
-  },
-  autoLayer: null,
-};
+  pointLayer: null
+}
 
-const formRef = ref(null);
-let currLayer = null;
-// let saveSingle = false
-let drawStatus = false;
+const formRef = ref(null)
+let currLayer = null
+let titleLayer = [] // 散点名称图层
+let drawStatus = false
 const tooltipData = reactive({
   show: false,
-  title: "属性设置",
-  name: "",
+  title: '属性设置',
+  name: '',
   style: {
-    width: "422px",
-    left: "100px",
-    top: "300px",
+    width: '422px',
+    left: '100px',
+    top: '300px'
   },
-  scale: 300,
-});
+  scale: 300
+})
 
 const dataInfo = reactive({
   coordinate: [],
-  uid: null,
-});
+  uid: null
+})
 
 onMounted(() => {
-  initDrawLayer();
-  initDrawToolHandle();
-  locusExtendObject.draw("Point");
-});
+  initDrawLayer()
+  initDrawToolHandle()
+})
+
+// 清空图层
+const handleClear = () => {}
+
+const operationChange = (opType) => {
+  if (!opType) {
+    return
+  }
+  if (opType === 'clear') {
+    handleClear()
+  } else {
+    handleDownload(opType)
+  }
+}
+
+// 开始画点
+const startDraw = () => {
+  locusExtendObject.draw('Point')
+}
+
+const endDraw = () => {
+  locusExtendObject.exitDraw()
+}
 
 // 初始化绘制的矢量图层
 const initDrawLayer = () => {
-  if (map.getLayer("drawLayerLocusExtend")) {
-    map.getLayer("drawLayerLocusExtend").remove();
+  if (map.getLayer('drawLayerLocusExtend')) {
+    map.getLayer('drawLayerLocusExtend').remove()
   }
-  locusExtendLayer = new maptalks.VectorLayer("drawLayerLocusExtend").addTo(map);
-};
+  locusExtendLayer = new maptalks.VectorLayer('drawLayerLocusExtend').addTo(map)
+}
 // 初始化地图绘制工具的事件
 const initDrawToolHandle = () => {
-  locusExtendObject.start(map);
-  locusExtendObject.on("startdraw", () => {
-    // const { object, currDrawLayer } = params
-    layerObject.autoLayer &&
-      layerObject.autoLayer.remove() &&
-      (layerObject.autoLayer = null);
-  });
-  locusExtendObject.on("enddraw", (params) => {
-    const { param, currDrawLayer } = params;
+  locusExtendObject.start(map)
+
+  locusExtendObject.on('startdraw', () => {
+    layerObject.pointLayer && layerObject.pointLayer.remove() && (layerObject.pointLayer = null)
+  })
+
+  locusExtendObject.on('enddraw', (params) => {
+    const { param, currDrawLayer } = params
+    console.log(currDrawLayer, 'draw')
     // saveSingle = false
-    drawStatus = true;
-    layerObject.autoLayer = currDrawLayer;
+    drawStatus = true
+    layerObject.pointLayer = currDrawLayer
     // 添加geometry到矢量图层
-    currDrawLayer.addTo(locusExtendLayer);
+    currDrawLayer.addTo(locusExtendLayer)
     // 绘制完成触发
     if (param.coordinate) {
-      dataInfo.coordinate = param.coordinate;
-      showTooltip(param.viewPoint.x, param.viewPoint.y);
-      locusExtendObject.changeShowTooltip(true);
+      dataInfo.coordinate = param.coordinate
+      showTooltip(param.viewPoint.x, param.viewPoint.y)
+      locusExtendObject.changeShowTooltip(true)
       // spaceDrawLayer.value.addGeometry(currDrawLayer)
-      currLayer = currDrawLayer;
+      currLayer = currDrawLayer
     }
-    // isPointInPolygon.value = turf(geoPoint, layerObject.autoLayer._geometries[0].toGeoJSON().geometry)
-    // if (!isPointInPolygon.value) {
-    //   ZMessage({
-    //     message: '手动绘制区域应包含当前扩展点！',
-    //     type: 'warning'
-    //   })
-    // }
-  });
-};
-// 显示下拉框
-const showTooltip = (x, y, type) => {
-  if (type === "setting") {
-    tooltipData.style = {
-      width: "422px",
-      left: "50%",
-      top: "17px",
-      transform: "translateX(-50%)",
-    };
-  } else {
-    const maxLeft = window.innerWidth - 194 - 80;
-    const maxTop = window.innerHeight - 40;
-    tooltipData.style = {
-      width: "422px",
-      left: Math.max(Math.min(x, maxLeft) - 194, 80) + "px",
-      top: Math.max(Math.min(y, maxTop) - 208, 50) + "px",
-    };
+  })
+}
+// 显示信息框
+const showTooltip = (x, y) => {
+  const maxLeft = window.innerWidth - 274
+  const maxTop = window.innerHeight - 40
+  tooltipData.style = {
+    width: '422px',
+    left: Math.max(Math.min(x, maxLeft) - 194, 80) + 'px',
+    top: Math.max(Math.min(y, maxTop) - 208, 50) + 'px'
   }
+  tooltipData.show = true
+}
 
-  tooltipData.show = true;
-};
+const handleDownload = (geojson) => {
+  var downloadElement = document.createElement('a')
+  var data = JSON.stringify(geojson)
+  const blob = new Blob([data], { type: 'plain/text' })
+  let url = URL.createObjectURL(blob)
+  downloadElement.href = url
+  downloadElement.download = `${tooltipData.name}.json`
+  document.body.appendChild(downloadElement)
+  downloadElement.click()
+  document.body.removeChild(downloadElement)
+  window.URL.revokeObjectURL(url)
+}
 
 const buttonStatus = (val) => {
   // TODO
   // 手动强制退出绘制状态 临时解决矩形、圆形没有自动退出问题
-  locusExtendObject.endDraw();
+  locusExtendObject.endDraw()
   // 标记ShowTooltip当前显示状态 配合手动强制退出判断
-  locusExtendObject.changeShowTooltip(false);
-  if (val === "complete") {
+  locusExtendObject.changeShowTooltip(false)
+  if (val === 'complete') {
     // formRef.value.validate((valid) => {
     // if (valid) {
-    // saveSingle = true
     if (drawStatus) {
-      let space = null,
-        coor = [];
-
-      const coors = currLayer._getConnectPoints();
-      coor = [(coors[0]["x"] + coors[3]["x"]) / 2, coors[0]["y"]];
-      const geojson = currLayer._geometries[0].toGeoJSON();
+      // 当前点击点位坐标点
+      let coor = []
+      const coors = currLayer._getConnectPoints()
+      coor = [(coors[0]['x'] + coors[3]['x']) / 2, coors[0]['y']]
+      // 当前点位json
+      const geojson = currLayer._geometries[0].toGeoJSON()
       geojson.properties = {
         name: tooltipData.name,
-        scale: tooltipData.scale,
-      };
-      console.log(geojson, "geojson");
-      space = {
-        uid: dataInfo.uid,
-        space_type: 0,
-        space_value: {
-          // point: geojsonToWKT(geojson),
-          scale: tooltipData.scale,
-        },
-        space_name: tooltipData.name,
-        layer: currLayer,
-        point_id: null,
-        coordinate: coor,
-      };
+        scale: tooltipData.scale
+      }
 
-      var downloadElement = document.createElement("a");
-      var data = JSON.stringify(geojson);
-      const blob = new Blob([data], { type: "plain/text" });
-      let url = URL.createObjectURL(blob);
-      downloadElement.href = url;
-      downloadElement.download = `${tooltipData.name}.json`;
-      document.body.appendChild(downloadElement);
-      downloadElement.click();
-      document.body.removeChild(downloadElement);
-      window.URL.revokeObjectURL(url);
+      // handleDownload(geojson);
 
       const [marker] = locusExtendObject.addPanel({
         name: tooltipData.name,
         height: 0,
         top: 0,
-        coordinate: coor,
-        // layer: spaceLayer.value,
-        // drawLayer: spaceDrawLayer.value
-        // uid: dataInfo.uid,
-      });
-
-      space.markerLayer = marker;
-      // TODO
-      // space.layer.on('dblclick', function (e) {
-      //   if (exitStatus.value === false) {
-      //     currLayer = space.layer
-      //     space.layer._geometries[space.layer._geometries.length - 1].startEdit()
-      //   }
-      // })
-      console.log(space, "space");
+        coordinate: coor
+      })
+      titleLayer.push(marker)
+      marker.addTo(map)
       // 弹框中UIMarker
       // curDrawMarkers.push(drawMarker)
 
@@ -248,9 +217,9 @@ const buttonStatus = (val) => {
       //   currSettingTime.value.unit = dataRanges.unit
       // }
     }
-    currLayer = null;
-    tooltipData.show = false;
-    tooltipData.name = "";
+    currLayer = null
+    tooltipData.show = false
+    tooltipData.name = ''
     // }
     // })
   } else {
@@ -263,10 +232,10 @@ const buttonStatus = (val) => {
       // }
     }
 
-    tooltipData.show = false;
-    tooltipData.name = "";
+    tooltipData.show = false
+    tooltipData.name = ''
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
