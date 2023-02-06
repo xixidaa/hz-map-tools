@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-01-03 18:28:35
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-06 16:17:41
+ * @LastEditTime: 2023-02-06 21:06:38
  * @FilePath: /hz-map-tools/src/components/PointPickerContainer.vue
 -->
 <template>
@@ -38,16 +38,16 @@
 import * as maptalks from 'maptalks'
 import { onMounted, inject, reactive, ref } from 'vue'
 import UserDefineArea from './DrawRelated/userDefineArea'
-const locusExtendObject = new UserDefineArea('drawLayerLocusExtend')
+const pointPickObject = new UserDefineArea('drawpointPickObject')
 let map = inject('map')
-let locusExtendLayer
+let pointBaseLayer = null
 const layerObject = {
   pointLayer: null
 }
 
 const formRef = ref(null)
 let currLayer = null
-let titleLayer = [] // 散点名称图层
+let markerLayerArr = [] // 散点名称图层
 let drawStatus = false
 const tooltipData = reactive({
   show: false,
@@ -72,7 +72,16 @@ onMounted(() => {
 })
 
 // 清空图层
-const handleClear = () => {}
+const handleClear = () => {
+  pointBaseLayer && pointBaseLayer.clear()
+  console.log(markerLayerArr, 'markerLayerArr')
+  // markerLayer && markerLayer.clear()
+  if (markerLayerArr.length !== 0) {
+    markerLayerArr.forEach((marker) => {
+      marker?.remove()
+    })
+  }
+}
 
 const operationChange = (opType) => {
   if (!opType) {
@@ -87,41 +96,44 @@ const operationChange = (opType) => {
 
 // 开始画点
 const startDraw = () => {
-  locusExtendObject.draw('Point')
+  pointPickObject.draw('Point')
 }
 
 const endDraw = () => {
-  locusExtendObject.exitDraw()
+  pointPickObject.exitDraw()
 }
 
 // 初始化绘制的矢量图层
 const initDrawLayer = () => {
-  if (map.getLayer('drawLayerLocusExtend')) {
-    map.getLayer('drawLayerLocusExtend').remove()
+  if (map.getLayer('pointBaseLayer')) {
+    map.getLayer('pointBaseLayer').remove()
   }
-  locusExtendLayer = new maptalks.VectorLayer('drawLayerLocusExtend').addTo(map)
+  if (map.getLayer('markerLayer')) {
+    map.getLayer('markerLayer').remove()
+  }
+  pointBaseLayer = new maptalks.VectorLayer('pointBaseLayer').addTo(map)
+  // markerLayer = new maptalks.VectorLayer('markerLayer').addTo(map)
 }
 // 初始化地图绘制工具的事件
 const initDrawToolHandle = () => {
-  locusExtendObject.start(map)
+  pointPickObject.start(map)
 
-  locusExtendObject.on('startdraw', () => {
+  pointPickObject.on('startdraw', () => {
     layerObject.pointLayer && layerObject.pointLayer.remove() && (layerObject.pointLayer = null)
   })
 
-  locusExtendObject.on('enddraw', (params) => {
+  pointPickObject.on('enddraw', (params) => {
     const { param, currDrawLayer } = params
-    console.log(currDrawLayer, 'draw')
     // saveSingle = false
     drawStatus = true
     layerObject.pointLayer = currDrawLayer
     // 添加geometry到矢量图层
-    currDrawLayer.addTo(locusExtendLayer)
+    currDrawLayer.addTo(pointBaseLayer)
     // 绘制完成触发
     if (param.coordinate) {
       dataInfo.coordinate = param.coordinate
       showTooltip(param.viewPoint.x, param.viewPoint.y)
-      locusExtendObject.changeShowTooltip(true)
+      pointPickObject.changeShowTooltip(true)
       // spaceDrawLayer.value.addGeometry(currDrawLayer)
       currLayer = currDrawLayer
     }
@@ -155,9 +167,9 @@ const handleDownload = (geojson) => {
 const buttonStatus = (val) => {
   // TODO
   // 手动强制退出绘制状态 临时解决矩形、圆形没有自动退出问题
-  locusExtendObject.endDraw()
+  pointPickObject.endDraw()
   // 标记ShowTooltip当前显示状态 配合手动强制退出判断
-  locusExtendObject.changeShowTooltip(false)
+  pointPickObject.changeShowTooltip(false)
   if (val === 'complete') {
     // formRef.value.validate((valid) => {
     // if (valid) {
@@ -175,13 +187,13 @@ const buttonStatus = (val) => {
 
       // handleDownload(geojson);
 
-      const [marker] = locusExtendObject.addPanel({
+      const [marker] = pointPickObject.addPanel({
         name: tooltipData.name,
         height: 0,
         top: 0,
         coordinate: coor
       })
-      titleLayer.push(marker)
+      markerLayerArr.push(marker)
       marker.addTo(map)
       // 弹框中UIMarker
       // curDrawMarkers.push(drawMarker)
