@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-01-03 18:28:35
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-06 21:06:38
+ * @LastEditTime: 2023-02-07 21:10:25
  * @FilePath: /hz-map-tools/src/components/PointPickerContainer.vue
 -->
 <template>
@@ -40,14 +40,16 @@ import { onMounted, inject, reactive, ref } from 'vue'
 import UserDefineArea from './DrawRelated/userDefineArea'
 const pointPickObject = new UserDefineArea('drawpointPickObject')
 let map = inject('map')
-let pointBaseLayer = null
-const layerObject = {
-  pointLayer: null
-}
-
+let pointBaseLayer = null,
+  // curDrawMarkers = [], // 定位marker图标
+  markerLayerArr = [] // 散点名称图层
+// const layerObject = {
+//   pointLayer: null
+// }
+const pointPickerList = ref([])
+let markerLayer = null // 点击点位图层
 const formRef = ref(null)
 let currLayer = null
-let markerLayerArr = [] // 散点名称图层
 let drawStatus = false
 const tooltipData = reactive({
   show: false,
@@ -74,8 +76,7 @@ onMounted(() => {
 // 清空图层
 const handleClear = () => {
   pointBaseLayer && pointBaseLayer.clear()
-  console.log(markerLayerArr, 'markerLayerArr')
-  // markerLayer && markerLayer.clear()
+  markerLayer && markerLayer.clear()
   if (markerLayerArr.length !== 0) {
     markerLayerArr.forEach((marker) => {
       marker?.remove()
@@ -111,30 +112,32 @@ const initDrawLayer = () => {
   if (map.getLayer('markerLayer')) {
     map.getLayer('markerLayer').remove()
   }
+  markerLayer = new maptalks.VectorLayer('markerLayer').addTo(map)
   pointBaseLayer = new maptalks.VectorLayer('pointBaseLayer').addTo(map)
-  // markerLayer = new maptalks.VectorLayer('markerLayer').addTo(map)
 }
 // 初始化地图绘制工具的事件
 const initDrawToolHandle = () => {
   pointPickObject.start(map)
 
-  pointPickObject.on('startdraw', () => {
-    layerObject.pointLayer && layerObject.pointLayer.remove() && (layerObject.pointLayer = null)
+  pointPickObject.on('startdraw', (params) => {
+    const { currDrawLayer } = params
+    if (currDrawLayer) currDrawLayer.remove()
+    // layerObject.pointLayer && layerObject.pointLayer.remove() && (layerObject.pointLayer = null)
   })
 
   pointPickObject.on('enddraw', (params) => {
     const { param, currDrawLayer } = params
     // saveSingle = false
     drawStatus = true
-    layerObject.pointLayer = currDrawLayer
+    // layerObject.pointLayer = currDrawLayer
     // 添加geometry到矢量图层
-    currDrawLayer.addTo(pointBaseLayer)
+    // currDrawLayer.addTo(pointBaseLayer)
     // 绘制完成触发
     if (param.coordinate) {
       dataInfo.coordinate = param.coordinate
       showTooltip(param.viewPoint.x, param.viewPoint.y)
       pointPickObject.changeShowTooltip(true)
-      // spaceDrawLayer.value.addGeometry(currDrawLayer)
+      markerLayer.addGeometry(currDrawLayer)
       currLayer = currDrawLayer
     }
   })
@@ -185,7 +188,10 @@ const buttonStatus = (val) => {
         scale: tooltipData.scale
       }
 
-      // handleDownload(geojson);
+      pointPickerList.value.push({
+        geojson
+        // json
+      })
 
       const [marker] = pointPickObject.addPanel({
         name: tooltipData.name,
@@ -195,6 +201,7 @@ const buttonStatus = (val) => {
       })
       markerLayerArr.push(marker)
       marker.addTo(map)
+
       // 弹框中UIMarker
       // curDrawMarkers.push(drawMarker)
 
