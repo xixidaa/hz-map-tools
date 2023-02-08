@@ -1,6 +1,16 @@
+:root {
+  --control-background-color: #181b24;
+  --control-border-color: #393b4a;
+  --control-text-color: #bfbfbf;
+  --control-text-primary-color: #a1aeb3;
+  --control-checked-background-color: #00b1b8;
+  --el-color-primary: #00b1b8;
+  --el-border-color-base: rgba(0, 177, 184, 0.25);
+  --el-border-color-light: #393b4a;
+}
+
 .el-header {
   height: 40px;
-
   --el-header-padding: 0;
 }
 
@@ -42,3 +52,30 @@
 }
 
 /* 弹窗样式覆写 end */
+
+/* el-input样式覆写 start */
+.el-input__wrapper,
+.el-textarea__inner,
+.el-checkbox__inner,
+.el-input-number__decrease,
+.el-input-number__increase,
+.el-radio-button__inner,
+.el-color-picker__trigger,
+.el-radio__inner,
+.el-tabs__item {
+  background-color: rgba(204, 219, 255, 0.06);
+  border-color: var(--control-border-color);
+}
+
+// .el-input__wrapper {
+//   // padding: 0 15px;
+//   box-shadow: none;
+//   background-color: rgba(204, 219, 255, 0.06);
+//   border-radius: 4px 4px 0 0;
+// }
+
+// .el-input__inner {
+//   padding: 0 15px;
+// }
+
+/* el-input样式覆写 end */

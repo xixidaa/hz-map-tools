@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-01-03 18:28:35
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-07 21:10:25
+ * @LastEditTime: 2023-02-08 20:30:01
  * @FilePath: /hz-map-tools/src/components/PointPickerContainer.vue
 -->
 <template>
@@ -20,9 +20,10 @@
         </el-form-item>
       </div>
       <div class="tooltip-item">
+        <SvgIcon name="react" class="space-icon common-icon-middle"></SvgIcon>
         <span>点位数值</span>
         <el-form-item prop="scale">
-          <el-input v-model="tooltipData.scale" class="range-value" maxlength="5" clearable></el-input>
+          <el-input v-model="tooltipData.scale" class="space-value" maxlength="5" clearable></el-input>
         </el-form-item>
       </div>
     </el-form>
@@ -40,9 +41,8 @@ import { onMounted, inject, reactive, ref } from 'vue'
 import UserDefineArea from './DrawRelated/userDefineArea'
 const pointPickObject = new UserDefineArea('drawpointPickObject')
 let map = inject('map')
-let pointBaseLayer = null,
-  // curDrawMarkers = [], // 定位marker图标
-  markerLayerArr = [] // 散点名称图层
+// curDrawMarkers = [], // 定位marker图标
+let markerLayerArr = [] // 散点名称图层
 // const layerObject = {
 //   pointLayer: null
 // }
@@ -60,7 +60,7 @@ const tooltipData = reactive({
     left: '100px',
     top: '300px'
   },
-  scale: 300
+  scale: 0
 })
 
 const dataInfo = reactive({
@@ -75,7 +75,6 @@ onMounted(() => {
 
 // 清空图层
 const handleClear = () => {
-  pointBaseLayer && pointBaseLayer.clear()
   markerLayer && markerLayer.clear()
   if (markerLayerArr.length !== 0) {
     markerLayerArr.forEach((marker) => {
@@ -106,14 +105,10 @@ const endDraw = () => {
 
 // 初始化绘制的矢量图层
 const initDrawLayer = () => {
-  if (map.getLayer('pointBaseLayer')) {
-    map.getLayer('pointBaseLayer').remove()
-  }
   if (map.getLayer('markerLayer')) {
     map.getLayer('markerLayer').remove()
   }
   markerLayer = new maptalks.VectorLayer('markerLayer').addTo(map)
-  pointBaseLayer = new maptalks.VectorLayer('pointBaseLayer').addTo(map)
 }
 // 初始化地图绘制工具的事件
 const initDrawToolHandle = () => {
@@ -130,8 +125,6 @@ const initDrawToolHandle = () => {
     // saveSingle = false
     drawStatus = true
     // layerObject.pointLayer = currDrawLayer
-    // 添加geometry到矢量图层
-    // currDrawLayer.addTo(pointBaseLayer)
     // 绘制完成触发
     if (param.coordinate) {
       dataInfo.coordinate = param.coordinate
@@ -142,6 +135,7 @@ const initDrawToolHandle = () => {
     }
   })
 }
+
 // 显示信息框
 const showTooltip = (x, y) => {
   const maxLeft = window.innerWidth - 274
@@ -239,20 +233,23 @@ const buttonStatus = (val) => {
     currLayer = null
     tooltipData.show = false
     tooltipData.name = ''
+    tooltipData.scale = ''
     // }
     // })
   } else {
     if (drawStatus) {
-      // removeCurrLayer(currLayer)
-    } else {
-      // if (currSettingData.value.space_type == 0) {
-      //   tooltipData.scale = currSettingData.value.space_value.scale
-      //   tooltipData.unit = currSettingData.value.space_value.unit
-      // }
+      removeCurrLayer(currLayer)
+      currLayer = null
     }
-
     tooltipData.show = false
     tooltipData.name = ''
+  }
+}
+
+const removeCurrLayer = (layer) => {
+  if (layer?.remove) {
+    layer.remove()
+    // spaceDrawLayer.value._geoList.pop()
   }
 }
 </script>
@@ -260,5 +257,50 @@ const buttonStatus = (val) => {
 <style lang="scss" scoped>
 .point-pick-wrapper {
   color: #000;
+}
+.tooltip-item {
+  height: 60px;
+  line-height: 60px;
+  font-size: 12px;
+  text-align: left;
+  :deep(.el-form-item) {
+    display: inline-block;
+  }
+}
+
+.space-value {
+  width: 260px;
+  margin-left: 16px;
+  :deep(.el-input__wrapper) {
+    width: 260px;
+    background: rgba(204, 219, 255, 0.06);
+    border-radius: 4px 4px 0 0;
+    border: none;
+    border-bottom: 1px solid #9498a3;
+    box-shadow: none;
+  }
+  :deep(.el-input__inner) {
+    height: 27px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: normal;
+  }
+}
+
+.range-value {
+  display: inline-block;
+  width: 126px;
+  margin-left: 16px;
+  :deep(.el-input__inner) {
+    width: 126px;
+    height: 27px;
+    background: rgba(204, 219, 255, 0.06);
+    border-radius: 4px 4px 0 0;
+    border: 0;
+    border-bottom: 1px solid #3f4350;
+    color: #fff;
+    font-size: 12px;
+    font-weight: normal;
+  }
 }
 </style>

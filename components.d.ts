@@ -8,6 +8,7 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     'Button.ce': typeof import('./src/components/CustomElementComps/Button.ce.vue')['default']
+    DrawToolType: typeof import('./src/components/DrawRelated/DrawToolType.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElContainer: typeof import('element-plus/es')['ElContainer']
@@ -37,5 +38,6 @@ declare module '@vue/runtime-core' {
     SelectArea: typeof import('./src/components/SelectArea.vue')['default']
     SpaceDrawContainer: typeof import('./src/components/SpaceDrawContainer.vue')['default']
     SpaceTooltip: typeof import('./src/components/DrawRelated/SpaceTooltip.vue')['default']
+    SvgIcon: typeof import('./src/components/SvgIcon.vue')['default']
   }
 }
