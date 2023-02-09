@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-01-12 17:20:12
  * @LastEditors: WangNing
- * @LastEditTime: 2023-01-18 17:36:47
+ * @LastEditTime: 2023-02-09 21:01:17
  * @FilePath: /hz-map-tools/src/components/GeojsonWktTrans.vue
 -->
 <template>
@@ -47,10 +47,9 @@
 <script setup>
 import { ref } from 'vue'
 import { ElMessageBox, ElMessage } from 'element-plus'
-import { useGeojsonValidate } from '../hooks/useGeojsonValidate'
 import { geojsonToWKT, wktToGeoJSON } from '@terraformer/wkt'
+import { randomStr, isGeojsonOrWkt } from 'utils/commonTools'
 
-const { geoTest } = useGeojsonValidate()
 const fileList = ref([])
 const transformedFileList = ref([])
 
@@ -119,26 +118,26 @@ const fileTransForm = (file) => {
   }
 }
 
-const randomStr = () => {
-  return Math.random().toString(16).substr(2, 6)
-}
+// const randomStr = () => {
+//   return Math.random().toString(16).substr(2, 6)
+// }
 
-const isGeojsonOrWkt = (txt) => {
-  const isValidGeo = geoTest(txt).errFlag
-  if (!isValidGeo) {
-    // 合法geojson
-    return 'geojson'
-  } else {
-    // 非法或wkt
-    let reg = /^POINT|LINESTRING|POLYGON|MULTIPOINT|MULTILINESTRING|MULTIPOLYGON/
-    if (reg.test(txt)) {
-      // wkt
-      return 'wkt'
-    } else {
-      return 'invalid'
-    }
-  }
-}
+// const isGeojsonOrWkt = (txt) => {
+//   const isValidGeo = geoTest(txt).errFlag
+//   if (!isValidGeo) {
+//     // 合法geojson
+//     return 'geojson'
+//   } else {
+//     // 非法或wkt
+//     let reg = /^POINT|LINESTRING|POLYGON|MULTIPOINT|MULTILINESTRING|MULTIPOLYGON/
+//     if (reg.test(txt)) {
+//       // wkt
+//       return 'wkt'
+//     } else {
+//       return 'invalid'
+//     }
+//   }
+// }
 
 const beforeRemove = (uploadFile) => {
   return ElMessageBox.confirm(`确认删除${uploadFile.name} ?`).then(

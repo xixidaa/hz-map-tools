@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2022-12-27 14:36:37
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-09 10:42:29
+ * @LastEditTime: 2023-02-09 21:00:08
  * @FilePath: /hz-map-tools/vite.config.js
  * @Description:
  */
@@ -86,7 +86,8 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
       comps: fileURLToPath(new URL('./src/components', import.meta.url)),
-      utils: fileURLToPath(new URL('./src/utils', import.meta.url))
+      utils: fileURLToPath(new URL('./src/utils', import.meta.url)),
+      hooks: fileURLToPath(new URL('./src/hooks', import.meta.url))
     }
   },
   server: {

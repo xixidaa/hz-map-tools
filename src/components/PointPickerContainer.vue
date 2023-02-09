@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-01-03 18:28:35
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-09 10:50:25
+ * @LastEditTime: 2023-02-09 21:08:06
  * @FilePath: /hz-map-tools/src/components/PointPickerContainer.vue
 -->
 <template>
@@ -38,18 +38,20 @@
 import * as maptalks from 'maptalks'
 import { onMounted, inject, reactive, ref } from 'vue'
 import UserDefineArea from './DrawRelated/userDefineArea'
+import { ElMessage } from 'element-plus'
+import { saveAs } from 'file-saver'
+import JSZip from 'jszip'
+import { randomStr } from 'utils/commonTools'
+
 const pointPickObject = new UserDefineArea('drawpointPickObject')
 let map = inject('map')
-// curDrawMarkers = [], // 定位marker图标
 let markerLayerArr = [] // 散点名称图层
-// const layerObject = {
-//   pointLayer: null
-// }
-const pointPickerList = ref([])
+const pointPickerList = ref([]) // 选中散点列表
 let markerLayer = null // 点击点位图层
 const formRef = ref(null)
-let currLayer = null
+let currLayer = null // 当前选中的点位图层
 let drawStatus = false
+
 const tooltipData = reactive({
   show: false,
   title: '属性设置',
@@ -60,11 +62,6 @@ const tooltipData = reactive({
     top: '300px'
   },
   scale: 0
-})
-
-const dataInfo = reactive({
-  coordinate: [],
-  uid: null
 })
 
 onMounted(() => {
@@ -80,6 +77,7 @@ const handleClear = () => {
       marker?.remove()
     })
   }
+  pointPickerList.value = []
 }
 
 const operationChange = (opType) => {
@@ -89,7 +87,7 @@ const operationChange = (opType) => {
   if (opType === 'clear') {
     handleClear()
   } else {
-    handleDownload(opType)
+    beforepDownload(opType)
   }
 }
 
@@ -116,17 +114,13 @@ const initDrawToolHandle = () => {
   pointPickObject.on('startdraw', (params) => {
     const { currDrawLayer } = params
     if (currDrawLayer) currDrawLayer.remove()
-    // layerObject.pointLayer && layerObject.pointLayer.remove() && (layerObject.pointLayer = null)
   })
 
   pointPickObject.on('enddraw', (params) => {
     const { param, currDrawLayer } = params
-    // saveSingle = false
     drawStatus = true
-    // layerObject.pointLayer = currDrawLayer
     // 绘制完成触发
     if (param.coordinate) {
-      dataInfo.coordinate = param.coordinate
       showTooltip(param.viewPoint.x, param.viewPoint.y)
       pointPickObject.changeShowTooltip(true)
       markerLayer.addGeometry(currDrawLayer)
@@ -147,17 +141,41 @@ const showTooltip = (x, y) => {
   tooltipData.show = true
 }
 
-const handleDownload = (geojson) => {
-  var downloadElement = document.createElement('a')
-  var data = JSON.stringify(geojson)
-  const blob = new Blob([data], { type: 'plain/text' })
-  let url = URL.createObjectURL(blob)
-  downloadElement.href = url
-  downloadElement.download = `${tooltipData.name}.json`
-  document.body.appendChild(downloadElement)
-  downloadElement.click()
-  document.body.removeChild(downloadElement)
-  window.URL.revokeObjectURL(url)
+const beforepDownload = (type) => {
+  if (pointPickerList.value.length === 0) {
+    return ElMessage.warning('请拾取点位后再下载')
+  }
+  const zip = new JSZip()
+  const promises = []
+  pointPickerList.value.forEach((item) => {
+    const fileObj = item[type]
+    const promise = readFile(fileObj.json).then((res) => {
+      zip.file(`${fileObj.filename}-${randomStr()}.json`, res, { binary: true }) // 逐个添加文件
+    })
+    promises.push(promise)
+  })
+  Promise.all(promises).then(() => {
+    //异步队列全部完成时 执行下面代码
+    zip.generateAsync({ type: 'blob' }).then((content) => {
+      // 利用file-saver保存文件
+      saveAs(content, '打包下载.zip')
+    })
+  })
+}
+
+const readFile = (json) => {
+  return new Promise((resolve, reject) => {
+    const data = JSON.stringify(json)
+    const blob = new Blob([data], { type: 'plain/text' })
+    const reader = new FileReader()
+    reader.readAsArrayBuffer(blob)
+    reader.onload = function () {
+      resolve(reader.result)
+    }
+    reader.onerror = function (error) {
+      reject(error.toString())
+    }
+  })
 }
 
 const buttonStatus = (val) => {
@@ -176,16 +194,31 @@ const buttonStatus = (val) => {
       coor = [(coors[0]['x'] + coors[3]['x']) / 2, coors[0]['y']]
       // 当前点位json
       const geojson = currLayer._geometries[0].toGeoJSON()
+      const name = tooltipData.name
+      const scale = tooltipData.scale
       geojson.properties = {
-        name: tooltipData.name,
-        scale: tooltipData.scale
+        name,
+        scale
+      }
+      const json = {
+        name,
+        scale,
+        lng: coor[0] ?? 0,
+        lat: coor[1] ?? 0
       }
 
       pointPickerList.value.push({
-        geojson
-        // json
+        geojson: {
+          filename: name,
+          json: geojson
+        },
+        json: {
+          filename: name,
+          json
+        }
       })
 
+      // 添加选中点标签
       const [marker] = pointPickObject.addPanel({
         name: tooltipData.name,
         height: 0,
@@ -194,47 +227,11 @@ const buttonStatus = (val) => {
       })
       markerLayerArr.push(marker)
       marker.addTo(map)
-
-      // 弹框中UIMarker
-      // curDrawMarkers.push(drawMarker)
-
-      // if (timeContentFlag.value) {
-      //   const dataRanges = timeDataToRanges()
-      //   if (!dataRanges) return
-      //   layerCollection.value.unshift({
-      //     space,
-      //     data_ranges: dataRanges
-      //   })
-      // } else {
-      //   layerCollection.value.unshift(space)
-      // }
-      // index++
-    } else {
-      // currSettingData.value.space_name = tooltipData.name
-      // currSettingData.value.markerLayer.__uiDOM.querySelector('div').innerText = tooltipData.name
-      // currSettingData.value.markerLayer.setContent(currSettingData.value.markerLayer.__uiDOM.innerHTML)
-      // window.markerLayer = currSettingData.value.markerLayer
-      // if (currSettingData.value.space_type == 0) {
-      //   currSettingData.value.space_value.scale = tooltipData.scale
-      //   currSettingData.value.space_value.unit = tooltipData.unit
-      // }
-      // if (currSettingData.value.space_collect === 1 && currSettingData.value.point_id) {
-      //   store.dispatch('keyArea/impUpdate', currSettingData.value)
-      // }
-      // if (timeContentFlag.value) {
-      //   const dataRanges = timeDataToRanges()
-      //   if (!dataRanges) return
-      //   currSettingTime.value.type = dataRanges.type
-      //   currSettingTime.value.ranges = dataRanges.ranges
-      //   currSettingTime.value.unit = dataRanges.unit
-      // }
     }
     currLayer = null
     tooltipData.show = false
     tooltipData.name = ''
     tooltipData.scale = ''
-    // }
-    // })
   } else {
     if (drawStatus) {
       removeCurrLayer(currLayer)
@@ -248,7 +245,6 @@ const buttonStatus = (val) => {
 const removeCurrLayer = (layer) => {
   if (layer?.remove) {
     layer.remove()
-    // spaceDrawLayer.value._geoList.pop()
   }
 }
 </script>

@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-01-18 18:00:07
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-03 10:22:38
+ * @LastEditTime: 2023-02-09 16:56:30
  * @FilePath: /hz-map-tools/src/components/SelectArea.vue
 -->
 <template>
@@ -15,14 +15,19 @@
 </template>
 
 <script setup>
-import { ref, inject, onUnmounted } from 'vue'
+import { ref, inject, onUnmounted, onMounted } from 'vue'
 import { PROVINCE_COORDINATES_MAP } from 'utils/constent'
 import { GeoJSONVectorTileLayer, GroupGLLayer } from '@maptalks/gl-layers'
 
 let map = inject('map')
-let groupLayer = new GroupGLLayer('group', []).addTo(map)
-let geoLayer = new GeoJSONVectorTileLayer('geoLayer', {})
+let groupLayer = null
+let geoLayer = null
 const selectCity = ref('')
+
+onMounted(() => {
+  groupLayer = new GroupGLLayer('group', []).addTo(map)
+  geoLayer = new GeoJSONVectorTileLayer('geoLayer', {})
+})
 
 const handleCityChange = (city) => {
   const currSelectCity = PROVINCE_COORDINATES_MAP.find((item) => item.value === city)
@@ -42,7 +47,11 @@ const flyToArea = async (currSelectCity = {}) => {
     })
 
     if (geojson) {
-      drawGeojson(geojson)
+      try {
+        drawGeojson(geojson)
+      } catch (error) {
+        console.log(error, 'sssss')
+      }
     }
   } catch (error) {
     console.log(error)
@@ -75,8 +84,12 @@ const drawGeojson = (geojson = '') => {
     ]
   }
 
-  geoLayer.setData(geojson)
-  geoLayer.setStyle(style)
+  try {
+    geoLayer.setData(geojson)
+    geoLayer.setStyle(style)
+  } catch (error) {
+    console.log(error, 'cc')
+  }
 
   geoLayer.on('dataload', (e) => {
     map.fitExtent(e.extent)
