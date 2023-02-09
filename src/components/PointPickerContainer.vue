@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-01-03 18:28:35
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-08 20:30:01
+ * @LastEditTime: 2023-02-09 10:50:25
  * @FilePath: /hz-map-tools/src/components/PointPickerContainer.vue
 -->
 <template>
@@ -20,7 +20,6 @@
         </el-form-item>
       </div>
       <div class="tooltip-item">
-        <SvgIcon name="react" class="space-icon common-icon-middle"></SvgIcon>
         <span>点位数值</span>
         <el-form-item prop="scale">
           <el-input v-model="tooltipData.scale" class="space-value" maxlength="5" clearable></el-input>

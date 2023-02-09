@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-02-02 16:53:34
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-06 16:14:16
+ * @LastEditTime: 2023-02-09 10:21:30
  * @FilePath: /hz-map-tools/src/components/PointTools.vue
 -->
 <template>
@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { ref, defineEmits } from 'vue'
+import { ref } from 'vue'
 const emit = defineEmits(['startDraw', 'endDraw', 'operationChange'])
 const btnStatus = ref(false)
 

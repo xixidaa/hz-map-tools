@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2022-12-27 14:36:37
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-08 20:37:09
+ * @LastEditTime: 2023-02-09 10:42:29
  * @FilePath: /hz-map-tools/vite.config.js
  * @Description:
  */
@@ -17,7 +17,8 @@ import visualizer from 'rollup-plugin-visualizer' // 打包分析
 import viteCompression from 'vite-plugin-compression' // gzip压缩
 import IconsResolver from 'unplugin-icons/resolver'
 import Icons from 'unplugin-icons/vite'
-import viteSvgIcons from 'vite-plugin-svg-icons' // svg
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons' // svg
+import path from 'path'
 
 const NODE_ENV = process.env.NODE_ENV
 const prodPlugins = []
@@ -73,10 +74,9 @@ export default defineConfig({
       autoInstall: true
     }),
     viteStylelint(),
-    viteSvgIcons({
+    createSvgIconsPlugin({
       // 指定需要缓存的图标文件夹
-      // path.resolve(process.cwd(), 'src/assets/svg')
-      iconDirs: ['src/assets/svg'],
+      iconDirs: [path.resolve(process.cwd(), 'src/assets/svg')],
       // 指定symbolId格式
       symbolId: 'icon-[dir]-[name]'
     }),
