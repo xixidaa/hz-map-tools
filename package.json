@@ -28,6 +28,7 @@
     "@maptalks/gl-layers": "^0.17.0",
     "@maptalks/vt": "^0.78.2",
     "@terraformer/wkt": "^2.1.2",
+    "@turf/helpers": "^6.5.0",
     "axios": "^1.2.1",
     "babel-eslint": "^10.1.0",
     "chalk": "^5.2.0",

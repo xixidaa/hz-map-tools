@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2022-12-28 19:34:11
  * @LastEditors: WangNing
- * @LastEditTime: 2023-01-18 18:47:39
+ * @LastEditTime: 2023-02-10 17:11:38
  * @FilePath: /hz-map-tools/src/utils/commonTools.js
  * @Desc: 双向映射Map
  */
@@ -32,10 +32,12 @@ export class TwoWayMap extends Map {
   }
 }
 
+// 随机字符串
 export const randomStr = () => {
   return Math.random().toString(16).substr(2, 6)
 }
 
+// 判断文本类型
 export const isGeojsonOrWkt = (txt) => {
   const isValidGeo = geoTest(txt).errFlag
   if (!isValidGeo) {
@@ -51,4 +53,19 @@ export const isGeojsonOrWkt = (txt) => {
       return 'invalid'
     }
   }
+}
+
+export const readFile = (json) => {
+  return new Promise((resolve, reject) => {
+    const data = JSON.stringify(json)
+    const blob = new Blob([data], { type: 'plain/text' })
+    const reader = new FileReader()
+    reader.readAsArrayBuffer(blob)
+    reader.onload = function () {
+      resolve(reader.result)
+    }
+    reader.onerror = function (error) {
+      reject(error.toString())
+    }
+  })
 }

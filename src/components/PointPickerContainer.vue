@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-01-03 18:28:35
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-09 21:08:06
+ * @LastEditTime: 2023-02-13 16:14:31
  * @FilePath: /hz-map-tools/src/components/PointPickerContainer.vue
 -->
 <template>
@@ -35,14 +35,17 @@
 </template>
 
 <script setup>
+import { useRootStore } from '@/stores/index.js'
 import * as maptalks from 'maptalks'
-import { onMounted, inject, reactive, ref } from 'vue'
+import { onMounted, inject, reactive, ref, computed } from 'vue'
 import UserDefineArea from './DrawRelated/userDefineArea'
 import { ElMessage } from 'element-plus'
 import { saveAs } from 'file-saver'
 import JSZip from 'jszip'
-import { randomStr } from 'utils/commonTools'
+import { randomStr, readFile } from 'utils/commonTools'
+import { featureCollection } from '@turf/helpers'
 
+const rootStore = useRootStore()
 const pointPickObject = new UserDefineArea('drawpointPickObject')
 let map = inject('map')
 let markerLayerArr = [] // 散点名称图层
@@ -107,6 +110,7 @@ const initDrawLayer = () => {
   }
   markerLayer = new maptalks.VectorLayer('markerLayer').addTo(map)
 }
+
 // 初始化地图绘制工具的事件
 const initDrawToolHandle = () => {
   pointPickObject.start(map)
@@ -141,10 +145,36 @@ const showTooltip = (x, y) => {
   tooltipData.show = true
 }
 
+// 处理格式 json=>数组形式 geojson=>GeometryCollection
+const handleJsonFormat = (type) => {
+  let format = pointPickerList.value.map((item) => {
+    return {
+      ...item[type].json
+    }
+  })
+  if (type === 'geojson') {
+    return featureCollection(format)
+  }
+  return format
+}
+
+const isBatchDownload = computed(() => rootStore.isBatchDownload)
 const beforepDownload = (type) => {
   if (pointPickerList.value.length === 0) {
     return ElMessage.warning('请拾取点位后再下载')
   }
+  if (isBatchDownload.value) {
+    // 批量下载
+    handleBacthDownload(type)
+  } else {
+    // 合并下载
+    handleCombineDownload(type)
+  }
+  return
+}
+
+// 批量下载
+const handleBacthDownload = (type) => {
   const zip = new JSZip()
   const promises = []
   pointPickerList.value.forEach((item) => {
@@ -163,19 +193,13 @@ const beforepDownload = (type) => {
   })
 }
 
-const readFile = (json) => {
-  return new Promise((resolve, reject) => {
-    const data = JSON.stringify(json)
-    const blob = new Blob([data], { type: 'plain/text' })
-    const reader = new FileReader()
-    reader.readAsArrayBuffer(blob)
-    reader.onload = function () {
-      resolve(reader.result)
-    }
-    reader.onerror = function (error) {
-      reject(error.toString())
-    }
+// 合并下载
+const handleCombineDownload = (type) => {
+  const transformedJson = JSON.stringify(handleJsonFormat(type))
+  const transformedJsonFile = new File([transformedJson], `combine-${randomStr()}.json`, {
+    type: 'text/plain;charset=utf-8'
   })
+  saveAs(transformedJsonFile)
 }
 
 const buttonStatus = (val) => {

@@ -3,7 +3,7 @@
     <div class="space-setting-header">
       <div>{{ title }}</div>
       <div @click="buttonEvent('close')" class="close">
-        <!-- <SvgIcon name="close" class="space-icon common-icon-middle"></SvgIcon> -->
+        <SvgIcon name="close" class="space-icon common-icon-middle"></SvgIcon>
       </div>
     </div>
     <div class="space-setting-content">
@@ -58,7 +58,7 @@ const buttonEvent = (val) => {
   position: fixed;
   pointer-events: auto;
   visibility: visible;
-  z-index: 10;
+  z-index: 12;
 }
 
 .space-setting-header {
