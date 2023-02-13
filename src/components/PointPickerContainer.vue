@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-01-03 18:28:35
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-13 16:14:31
+ * @LastEditTime: 2023-02-13 16:51:49
  * @FilePath: /hz-map-tools/src/components/PointPickerContainer.vue
 -->
 <template>
@@ -188,7 +188,7 @@ const handleBacthDownload = (type) => {
     //异步队列全部完成时 执行下面代码
     zip.generateAsync({ type: 'blob' }).then((content) => {
       // 利用file-saver保存文件
-      saveAs(content, '打包下载.zip')
+      saveAs(content, '批量下载.zip')
     })
   })
 }
@@ -196,7 +196,7 @@ const handleBacthDownload = (type) => {
 // 合并下载
 const handleCombineDownload = (type) => {
   const transformedJson = JSON.stringify(handleJsonFormat(type))
-  const transformedJsonFile = new File([transformedJson], `combine-${randomStr()}.json`, {
+  const transformedJsonFile = new File([transformedJson], `合并下载-${randomStr()}.json`, {
     type: 'text/plain;charset=utf-8'
   })
   saveAs(transformedJsonFile)
@@ -274,9 +274,6 @@ const removeCurrLayer = (layer) => {
 </script>
 
 <style lang="scss" scoped>
-.point-pick-wrapper {
-  color: #000;
-}
 .tooltip-item {
   height: 60px;
   line-height: 60px;

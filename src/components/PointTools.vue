@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-02-02 16:53:34
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-13 15:48:34
+ * @LastEditTime: 2023-02-13 17:39:10
  * @FilePath: /hz-map-tools/src/components/PointTools.vue
 -->
 <template>
@@ -12,7 +12,7 @@
       <el-switch
         v-model="isBatchDownload"
         inline-prompt
-        style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
+        style="--el-switch-on-color: #00b1b8; --el-switch-off-color: #00a6ff"
         active-text="批量下载"
         inactive-text="合并下载"
         @change="handleTypeChange"

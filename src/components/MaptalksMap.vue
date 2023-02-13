@@ -2,19 +2,22 @@
  * @Author: WangNing
  * @Date: 2023-01-12 21:07:51
  * @LastEditors: WangNing
- * @LastEditTime: 2023-01-18 16:50:36
+ * @LastEditTime: 2023-02-13 17:17:44
  * @FilePath: /hz-map-tools/src/components/MaptalksMap.vue
 -->
 <template>
   <div id="map-container" class="map-container"></div>
+  <component v-if="show" :is="computedComp"></component>
   <!-- 行政边界生成器 -->
-  <SpaceDrawContainer v-if="show && props.toolType === 'areaGenerator'"></SpaceDrawContainer>
+  <!-- <SpaceDrawContainer v-if="show && props.toolType === 'areaGenerator'"></SpaceDrawContainer> -->
   <!-- 地图点位拾取器 -->
-  <PointPickerContainer v-if="show && props.toolType === 'pointPick'"></PointPickerContainer>
+  <!-- <PointPickerContainer v-if="show && props.toolType === 'pointPick'"></PointPickerContainer> -->
 </template>
 
 <script setup>
-import { onMounted, onBeforeUnmount, provide, ref } from 'vue'
+import SpaceDrawContainer from 'comps/SpaceDrawContainer.vue'
+import PointPickerContainer from 'comps/PointPickerContainer.vue'
+import { onMounted, onBeforeUnmount, provide, ref, computed } from 'vue'
 import CreateMap from '@/utils/map.js'
 const props = defineProps({
   toolType: {
@@ -24,6 +27,14 @@ const props = defineProps({
   }
 })
 const show = ref(false)
+const computedComp = computed(() => {
+  if (props.toolType === 'areaGenerator') {
+    return SpaceDrawContainer
+  } else if (props.toolType === 'pointPick') {
+    return PointPickerContainer
+  }
+  return null
+})
 let globalMap
 onMounted(() => {
   globalMap = new CreateMap()
