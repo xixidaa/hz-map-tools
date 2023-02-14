@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-01-18 18:00:07
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-14 15:31:01
+ * @LastEditTime: 2023-02-14 15:54:04
  * @FilePath: /hz-map-tools/src/components/SelectArea.vue
 -->
 <template>
@@ -113,7 +113,7 @@ onUnmounted(() => {
   right: 20px;
   cursor: pointer;
   :deep(.el-input__wrapper) {
-    background-color: rgba(204, 219, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.8);
   }
 }
 </style>

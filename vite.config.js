@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2022-12-27 14:36:37
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-14 15:40:29
+ * @LastEditTime: 2023-02-14 15:49:43
  * @FilePath: /hz-map-tools/vite.config.js
  * @Description:
  */
@@ -116,10 +116,11 @@ export default defineConfig({
         // 手动拆包
         manualChunks: {
           'lodash-es': ['lodash-es'],
+          vue: ['vue', 'vue-router'],
+          // 'vue-router': ['vue-router'],
           'element-plus': ['element-plus'],
           // axios: ['axios'],
           maptalks: ['maptalks'],
-          vue: ['vue', 'vue-router'],
           'maptalks-tools': ['src/views/LineEditor.vue', 'src/views/PointPicker.vue', 'src/views/AreaGenerator.vue'],
           geojson: ['src/views/GeojsonValidation.vue', 'src/views/GeojsonTransform.vue']
         },
