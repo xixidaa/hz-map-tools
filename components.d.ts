@@ -8,6 +8,7 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     'Button.ce': typeof import('./src/components/CustomElementComps/Button.ce.vue')['default']
+    DrawToolContainer: typeof import('./src/components/DrawRelated/DrawToolContainer.vue')['default']
     DrawToolType: typeof import('./src/components/DrawRelated/DrawToolType.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCol: typeof import('element-plus/es')['ElCol']

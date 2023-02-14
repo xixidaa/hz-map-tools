@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-01-18 18:00:07
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-14 15:54:04
+ * @LastEditTime: 2023-02-14 19:02:07
  * @FilePath: /hz-map-tools/src/components/SelectArea.vue
 -->
 <template>
@@ -107,7 +107,6 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .select-area-container {
   position: absolute;
-  padding: 10px;
   z-index: 10;
   top: 20px;
   right: 20px;

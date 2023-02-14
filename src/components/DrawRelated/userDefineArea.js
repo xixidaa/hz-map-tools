@@ -1,6 +1,6 @@
-// import * as maptalks from 'maptalks'
 import { DrawTool, GeometryCollection, ui, GeoJSON } from 'maptalks'
 var UserDefineArea = function (layerName) {
+  // 点线面样式
   const symbol = {
     Point: {
       markerType: 'path',
@@ -20,8 +20,8 @@ var UserDefineArea = function (layerName) {
       lineWidth: 1.5,
       lineOpacity: 1,
       polygonFill: 'rgb(44, 63, 76)',
-      polygonOpacity: 0.64,
-      lineDasharray: [2, 4]
+      polygonOpacity: 0.4,
+      lineDasharray: [6, 6]
     }
   }
   let currDrawLayer = null
@@ -29,7 +29,7 @@ var UserDefineArea = function (layerName) {
   const _this = this // 实例对象
   this.pointCircleRadius = 300
   this.mode = null // 画图模式
-  this.showTooltip = false
+  this.showTooltip = false // 绘制完图形是否显示属性配置框
   this.layerName = layerName ? layerName : 'drawLayer'
 
   _proto.changeShowTooltip = (showTooltip) => {
@@ -88,6 +88,7 @@ var UserDefineArea = function (layerName) {
       mode: mode,
       symbol: symbol[mode] || symbol['Polygon']
     }
+    console.log(_this.drawTool, '_this.drawTool.')
     _this.drawTool.options = styleObject
     _this.drawTool.setMode(mode).enable()
     _this.cursorStyle(mode)

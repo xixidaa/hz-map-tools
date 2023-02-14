@@ -2,11 +2,11 @@
  * @Author: WangNing
  * @Date: 2023-02-08 20:38:39
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-08 20:40:08
+ * @LastEditTime: 2023-02-14 19:32:05
  * @FilePath: /hz-map-tools/src/components/DrawRelated/DrawToolType.vue
 -->
 <template>
-  <div class="space-region">
+  <DrawToolContainer>
     <div @click="drawShape('Circle')" :class="shapeKey == 'Circle' && 'space-select-active'">
       <span>
         <SvgIcon name="circle" class="space-icon common-icon-middle"></SvgIcon>
@@ -25,12 +25,12 @@
       </span>
       <span>自定义</span>
     </div>
-  </div>
+  </DrawToolContainer>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-const shapeKey = ref('Polygon')
+const shapeKey = ref('')
 const emit = defineEmits(['drawToolValueChange'])
 
 const drawShape = (val) => {
@@ -51,35 +51,6 @@ emit('drawToolValueChange', shapeKey.value)
   height: 24px;
   color: rgba(255, 255, 255, 0.5);
 }
-.space-region {
-  box-sizing: border-box;
-  padding: 4px;
-  width: 220px;
-  height: 40px;
-  position: fixed;
-  left: 45%;
-  top: 86px;
-  background: #242730;
-  box-shadow: 0 4px 8px rgba(4, 8, 16, 0.16), 0 1px 3px rgba(4, 8, 16, 0.32), 0 0 1px rgba(4, 8, 16, 0.32);
-  border-radius: 8px;
-  font-size: 12px;
-  line-height: 20px;
-  color: rgba(255, 255, 255, 0.7);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  text-align: center;
-  visibility: visible;
-  transition: none;
-  pointer-events: auto;
-  div {
-    width: 64px;
-    &:nth-child(1),
-    &:nth-child(2) {
-      border-right: 2px solid rgba(204, 219, 255, 0.1);
-    }
-  }
-}
 
 .space-select-active {
   color: rgba(0, 177, 184, 1);
@@ -88,17 +59,25 @@ emit('drawToolValueChange', shapeKey.value)
   }
 }
 
-.space-region div:hover {
-  color: rgba(0, 177, 184, 1);
-  cursor: pointer;
-  .space-icon {
+.space-region {
+  & > div {
+    width: 64px;
+    &:nth-child(n + 1) {
+      border-right: 2px solid rgba(204, 219, 255, 0.1);
+    }
+    &:nth-last-child(1) {
+      border: none;
+    }
+  }
+  & > div:hover {
     color: rgba(0, 177, 184, 1);
+    cursor: pointer;
+    .space-icon {
+      color: rgba(0, 177, 184, 1);
+    }
   }
 }
-.space-region div:nth-child(3) {
-  width: 72px;
-}
-.space-region div span:nth-of-type(2) {
+.space-region > div > span:nth-of-type(2) {
   vertical-align: text-top;
   margin-left: 5px;
 }
