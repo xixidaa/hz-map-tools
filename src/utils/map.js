@@ -2,10 +2,11 @@
  * @Author: WangNing
  * @Date: 2023-01-03 16:05:06
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-13 17:24:00
+ * @LastEditTime: 2023-02-14 12:21:13
  * @FilePath: /hz-map-tools/src/utils/map.js
  */
-import * as maptalks from 'maptalks'
+// import * as maptalks from 'maptalks'
+import { Map, GroupTileLayer, TileLayer } from 'maptalks'
 // import { VectorTileLayer } from '@maptalks/gl-layers'
 export default class CreateMap {
   constructor(id = 'map') {
@@ -28,7 +29,7 @@ export default class CreateMap {
     divDom.style.backgroundColor = (style && style.backgroundColor) ?? null
     divDom.style.zIndex = (style && style.zIndex) ?? 1
     // 创建地图实例
-    this.map = new maptalks.Map(this.id, {
+    this.map = new Map(this.id, {
       center: [116.39747, 39.908823],
       zoom: 4,
       pitch: 0,
@@ -43,8 +44,8 @@ export default class CreateMap {
           color: [1, 1, 1]
         }
       },
-      baseLayer: new maptalks.GroupTileLayer('base', [
-        new maptalks.TileLayer('autonavi', {
+      baseLayer: new GroupTileLayer('base', [
+        new TileLayer('autonavi', {
           visible: true,
           urlTemplate:
             ' https://webrd03.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=7&x={x}&y={y}&z={z}',

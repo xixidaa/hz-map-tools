@@ -1,4 +1,5 @@
-import * as maptalks from 'maptalks'
+// import * as maptalks from 'maptalks'
+import { DrawTool, GeometryCollection, ui, GeoJSON } from 'maptalks'
 var UserDefineArea = function (layerName) {
   const symbol = {
     Point: {
@@ -40,7 +41,7 @@ var UserDefineArea = function (layerName) {
   // 生成工具
   _proto.start = (map) => {
     if (_this.drawTool) return
-    const drawTool = new maptalks.DrawTool({
+    const drawTool = new DrawTool({
       mode: 'Point'
     })
       .addTo(map)
@@ -59,7 +60,7 @@ var UserDefineArea = function (layerName) {
       const drawLayerCollection = []
       layerCollection.push(param.geometry)
       drawLayerCollection.push(param.geometry)
-      currDrawLayer = new maptalks.GeometryCollection(layerCollection)
+      currDrawLayer = new GeometryCollection(layerCollection)
 
       _this.trigger('startdraw', {
         object: _this,
@@ -102,7 +103,7 @@ var UserDefineArea = function (layerName) {
       text-align: center;white-space: nowrap;">
         ${name ? name : '未命名'}</div>`
     }
-    const marker_panel = new maptalks.ui.UIMarker(coordinate, options)
+    const marker_panel = new ui.UIMarker(coordinate, options)
     return [marker_panel]
   }
   _proto.exitDraw = () => {
@@ -134,11 +135,11 @@ var UserDefineArea = function (layerName) {
     }
   }
   _proto.createLayer = (mode, geojson) => {
-    const layer = maptalks.GeoJSON.toGeometry(geojson)
+    const layer = GeoJSON.toGeometry(geojson)
     layer.updateSymbol(symbol[mode])
     const layerCollection = []
     layerCollection.push(layer)
-    const drawLayer = new maptalks.GeometryCollection(layerCollection)
+    const drawLayer = new GeometryCollection(layerCollection)
     return drawLayer
   }
   /**

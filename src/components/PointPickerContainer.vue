@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-01-03 18:28:35
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-13 16:51:49
+ * @LastEditTime: 2023-02-14 12:18:27
  * @FilePath: /hz-map-tools/src/components/PointPickerContainer.vue
 -->
 <template>
@@ -36,7 +36,8 @@
 
 <script setup>
 import { useRootStore } from '@/stores/index.js'
-import * as maptalks from 'maptalks'
+// import * as maptalks from 'maptalks'
+import { VectorLayer } from 'maptalks'
 import { onMounted, inject, reactive, ref, computed } from 'vue'
 import UserDefineArea from './DrawRelated/userDefineArea'
 import { ElMessage } from 'element-plus'
@@ -108,7 +109,7 @@ const initDrawLayer = () => {
   if (map.getLayer('markerLayer')) {
     map.getLayer('markerLayer').remove()
   }
-  markerLayer = new maptalks.VectorLayer('markerLayer').addTo(map)
+  markerLayer = new VectorLayer('markerLayer').addTo(map)
 }
 
 // 初始化地图绘制工具的事件

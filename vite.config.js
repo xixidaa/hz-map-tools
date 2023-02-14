@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2022-12-27 14:36:37
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-09 21:00:08
+ * @LastEditTime: 2023-02-14 15:40:29
  * @FilePath: /hz-map-tools/vite.config.js
  * @Description:
  */
@@ -119,13 +119,17 @@ export default defineConfig({
           'element-plus': ['element-plus'],
           // axios: ['axios'],
           maptalks: ['maptalks'],
-          'vue-router': ['vue-router']
+          vue: ['vue', 'vue-router'],
+          'maptalks-tools': ['src/views/LineEditor.vue', 'src/views/PointPicker.vue', 'src/views/AreaGenerator.vue'],
+          geojson: ['src/views/GeojsonValidation.vue', 'src/views/GeojsonTransform.vue']
         },
         chunkFileNames: 'static/js/[name]-[hash].js',
         entryFileNames: 'static/js/[name]-[hash].js',
-        assetFileNames: 'static/[ext]/[name]-[hash].[ext]'
+        assetFileNames: 'static/[ext]/[name]-[hash].[ext]',
+        minifyInternalExports: true
       }
     },
-    reportCompressedSize: false // 关闭gzip压缩大小报告
+    reportCompressedSize: false, // 关闭gzip压缩大小报告
+    chunkSizeWarningLimit: 1000
   }
 })
