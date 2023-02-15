@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-02-08 20:38:39
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-14 19:31:49
+ * @LastEditTime: 2023-02-15 15:53:44
  * @FilePath: /hz-map-tools/src/components/DrawRelated/DrawToolContainer.vue
 -->
 <template>
@@ -11,7 +11,35 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { computed } from 'vue'
+const props = defineProps({
+  position: {
+    type: String,
+    default: 'center'
+  }
+})
+
+const boxStyleMap = {
+  left: {
+    left: '20px',
+    transform: 'translateX(0%)'
+  },
+  right: {
+    right: '20px',
+    transform: 'translateX(0%)'
+  },
+  center: {
+    left: '50%',
+    transform: 'translateX(-50%)'
+  }
+}
+
+// 工具栏位置
+const computedPos = computed(() => {
+  return boxStyleMap[props.position] ?? boxStyleMap['center']
+})
+</script>
 
 <style lang="scss" scoped>
 .common-icon-middle {
@@ -29,10 +57,10 @@
   padding: 4px;
   height: 40px;
   position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
+  left: v-bind('computedPos.left');
+  transform: v-bind('computedPos.transform');
   top: 60px;
-  background: #242730;
+  background: rgba(36, 39, 48, 70%);
   box-shadow: 0 4px 8px rgba(4, 8, 16, 0.16), 0 1px 3px rgba(4, 8, 16, 0.32), 0 0 1px rgba(4, 8, 16, 0.32);
   border-radius: 8px;
   font-size: 12px;

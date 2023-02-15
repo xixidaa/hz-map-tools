@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-01-03 18:28:35
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-14 12:18:27
+ * @LastEditTime: 2023-02-15 21:10:30
  * @FilePath: /hz-map-tools/src/components/PointPickerContainer.vue
 -->
 <template>
@@ -36,9 +36,8 @@
 
 <script setup>
 import { useRootStore } from '@/stores/index.js'
-// import * as maptalks from 'maptalks'
 import { VectorLayer } from 'maptalks'
-import { onMounted, inject, reactive, ref, computed } from 'vue'
+import { onMounted, inject, reactive, ref, computed, onBeforeUnmount } from 'vue'
 import UserDefineArea from './DrawRelated/userDefineArea'
 import { ElMessage } from 'element-plus'
 import { saveAs } from 'file-saver'
@@ -47,7 +46,7 @@ import { randomStr, readFile } from 'utils/commonTools'
 import { featureCollection } from '@turf/helpers'
 
 const rootStore = useRootStore()
-const pointPickObject = new UserDefineArea('drawpointPickObject')
+let pointPickObject = new UserDefineArea('drawpointPickObject')
 let map = inject('map')
 let markerLayerArr = [] // 散点名称图层
 const pointPickerList = ref([]) // 选中散点列表
@@ -272,6 +271,11 @@ const removeCurrLayer = (layer) => {
     layer.remove()
   }
 }
+
+onBeforeUnmount(() => {
+  handleClear()
+  pointPickObject = pointPickObject && pointPickObject.removeAll()
+})
 </script>
 
 <style lang="scss" scoped>

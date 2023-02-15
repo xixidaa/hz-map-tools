@@ -19,6 +19,7 @@
 }
 
 /* 弹窗样式覆写 start */
+
 .el-dialog {
   --el-dialog-width: 30%;
   background: #242730;
@@ -54,6 +55,7 @@
 /* 弹窗样式覆写 end */
 
 /* el-input样式覆写 start */
+
 .el-input__wrapper,
 .el-textarea__inner,
 .el-checkbox__inner,
@@ -67,15 +69,27 @@
   border-color: var(--control-border-color);
 }
 
-// .el-input__wrapper {
-//   // padding: 0 15px;
-//   box-shadow: none;
-//   background-color: rgba(204, 219, 255, 0.06);
-//   border-radius: 4px 4px 0 0;
-// }
-
-// .el-input__inner {
-//   padding: 0 15px;
-// }
-
 /* el-input样式覆写 end */
+
+.el-popper.is-light {
+  border: none;
+}
+.el-popover.el-popper {
+  min-width: 80px;
+}
+.download-btn {
+  --el-bg-color-overlay: rgba(36, 39, 48, 0.7);
+  --el-text-color-regular: rgba(255, 255, 255, 0.7);
+  width: 100px !important;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  & > div {
+    padding: 4px;
+    cursor: pointer;
+    text-align: center;
+    &:hover {
+      color: #00b1b8;
+    }
+  }
+}

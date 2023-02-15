@@ -88,7 +88,6 @@ var UserDefineArea = function (layerName) {
       mode: mode,
       symbol: symbol[mode] || symbol['Polygon']
     }
-    console.log(_this.drawTool, '_this.drawTool.')
     _this.drawTool.options = styleObject
     _this.drawTool.setMode(mode).enable()
     _this.cursorStyle(mode)
@@ -197,6 +196,7 @@ var UserDefineArea = function (layerName) {
         listener[item] = []
       }
     })
+    return null
   }
   _proto.updateStyle = () => {}
 }

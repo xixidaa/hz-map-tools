@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-02-08 20:38:39
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-14 19:32:05
+ * @LastEditTime: 2023-02-15 14:43:09
  * @FilePath: /hz-map-tools/src/components/DrawRelated/DrawToolType.vue
 -->
 <template>
@@ -37,7 +37,6 @@ const drawShape = (val) => {
   shapeKey.value = val
   emit('drawToolValueChange', val)
 }
-emit('drawToolValueChange', shapeKey.value)
 </script>
 
 <style lang="scss" scoped>

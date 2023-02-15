@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-01-06 17:18:30
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-06 15:58:57
+ * @LastEditTime: 2023-02-15 15:10:51
  * @FilePath: /hz-map-tools/src/components/CustomElementComps/Button.ce.vue
  * @Desc: vue实现webcomponent,测试使用，无实际意义
 -->
@@ -15,6 +15,7 @@
 <style lang="scss">
 @import './host.scss';
 .hz-ce-button {
+  --hz-button-bg-color: #fff;
   margin-left: 12px;
   display: inline-flex;
   justify-content: center;
@@ -31,7 +32,7 @@
   font-weight: var(--el-button-font-weight);
   user-select: none;
   vertical-align: middle;
-  background-color: var(--el-button-bg-color);
+  background-color: var(--hz-button-bg-color);
   border: var(--el-border);
   border-color: var(--el-button-border-color);
   padding: 8px 15px;

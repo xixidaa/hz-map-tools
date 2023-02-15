@@ -9,6 +9,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     'Button.ce': typeof import('./src/components/CustomElementComps/Button.ce.vue')['default']
     DrawToolContainer: typeof import('./src/components/DrawRelated/DrawToolContainer.vue')['default']
+    DrawTools: typeof import('./src/components/DrawRelated/DrawTools.vue')['default']
     DrawToolType: typeof import('./src/components/DrawRelated/DrawToolType.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCol: typeof import('element-plus/es')['ElCol']
@@ -23,6 +24,7 @@ declare module '@vue/runtime-core' {
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElOption: typeof import('element-plus/es')['ElOption']
+    ElPopover: typeof import('element-plus/es')['ElPopover']
     ElRow: typeof import('element-plus/es')['ElRow']
     ElSelect: typeof import('element-plus/es')['ElSelect']
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
