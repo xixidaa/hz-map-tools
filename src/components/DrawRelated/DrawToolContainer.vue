@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-02-08 20:38:39
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-15 15:53:44
+ * @LastEditTime: 2023-02-16 15:43:14
  * @FilePath: /hz-map-tools/src/components/DrawRelated/DrawToolContainer.vue
 -->
 <template>
@@ -72,7 +72,7 @@ const computedPos = computed(() => {
   text-align: center;
   visibility: visible;
   transition: none;
-  z-index: 100;
+  z-index: 10;
   pointer-events: auto;
 }
 

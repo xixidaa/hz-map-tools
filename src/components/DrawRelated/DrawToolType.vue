@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-02-08 20:38:39
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-15 14:43:09
+ * @LastEditTime: 2023-02-16 15:41:58
  * @FilePath: /hz-map-tools/src/components/DrawRelated/DrawToolType.vue
 -->
 <template>
@@ -19,7 +19,7 @@
       </span>
       <span>矩形</span>
     </div>
-    <div @click="drawShape('Polygon')" :class="shapeKey == 'Polygon' && 'space-select-active'">
+    <div title="双击完成绘制" @click="drawShape('Polygon')" :class="shapeKey == 'Polygon' && 'space-select-active'">
       <span>
         <SvgIcon name="user_define" class="space-icon common-icon-middle"></SvgIcon>
       </span>

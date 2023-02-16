@@ -2,12 +2,14 @@
  * @Author: WangNing
  * @Date: 2022-12-28 19:34:11
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-10 17:11:38
+ * @LastEditTime: 2023-02-16 19:34:15
  * @FilePath: /hz-map-tools/src/utils/commonTools.js
  * @Desc: 双向映射Map
  */
-
+import { featureCollection } from '@turf/helpers'
 import { useGeojsonValidate } from 'hooks/useGeojsonValidate'
+import { saveAs } from 'file-saver'
+import JSZip from 'jszip'
 
 const { geoTest } = useGeojsonValidate()
 
@@ -68,4 +70,46 @@ export const readFile = (json) => {
       reject(error.toString())
     }
   })
+}
+
+// 批量下json arr => [{ geojson: { filename: xx,json: xx },json: { filename: xx,json: xx } }] type: geojson/json
+export const handleBacthDownload = ({ arr, type }) => {
+  const zip = new JSZip()
+  const promises = []
+  arr.forEach((item) => {
+    const fileObj = item[type]
+    const promise = readFile(fileObj.json).then((res) => {
+      zip.file(`${fileObj.filename}-${randomStr()}.json`, res, { binary: true }) // 逐个添加文件
+    })
+    promises.push(promise)
+  })
+  Promise.all(promises).then(() => {
+    //异步队列全部完成时 执行下面代码
+    zip.generateAsync({ type: 'blob' }).then((content) => {
+      // 利用file-saver保存文件
+      saveAs(content, '批量下载.zip')
+    })
+  })
+}
+
+// 合并下载 arr => [{ geojson: { filename: xx,json: xx },json: { filename: xx,json: xx } }] type: geojson/json
+export const handleCombineDownload = ({ arr, type }) => {
+  const transformedJson = JSON.stringify(handleJsonFormat({ type, arr }))
+  const transformedJsonFile = new File([transformedJson], `合并下载-${randomStr()}.json`, {
+    type: 'text/plain;charset=utf-8'
+  })
+  saveAs(transformedJsonFile)
+}
+
+// 处理文件格式 json=>数组形式 geojson=>GeometryCollection
+export const handleJsonFormat = ({ type, arr }) => {
+  let format = arr.map((item) => {
+    return {
+      ...item[type].json
+    }
+  })
+  if (type === 'geojson') {
+    return featureCollection(format)
+  }
+  return format
 }
