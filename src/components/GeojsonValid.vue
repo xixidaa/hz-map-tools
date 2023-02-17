@@ -20,7 +20,7 @@
       <el-button class="valid-btn" type="primary" @click="validateGeojson"
         >开始校验</el-button
       >
-      <el-button class="valid-btn" @click="textarea = ''">清空</el-button>
+      <el-button class="valid-btn" @click="handleClear">清空</el-button>
     </div>
   </div>
 
@@ -46,7 +46,7 @@ const timer = ref(null);
 onMounted(() => {
   initJsonEditor();
 });
-
+// 初始化json编辑器
 const initJsonEditor = () => {
   const container = document.getElementById("jsoneditor");
   jsonEditor = new JsonEditor(container, {
@@ -72,6 +72,11 @@ const editBlur = () => {
   } catch (e) {
     isError.value = true;
   }
+};
+
+const handleClear = () => {
+  textarea.value = "";
+  jsonEditor.set({});
 };
 
 const onError = () => {
