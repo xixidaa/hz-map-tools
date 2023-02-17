@@ -32,7 +32,7 @@
 
   <Teleport to=".area-generator-wrapper">
     <SelectArea></SelectArea>
-    <DrawToolType @drawToolValueChange="drawShape"></DrawToolType>
+    <DrawToolType ref="drawToolType" @drawToolValueChange="drawShape"></DrawToolType>
     <DrawTools @operationChange="operationChange"></DrawTools>
   </Teleport>
 </template>
@@ -51,6 +51,8 @@ let drawStatus = false;
 let currLayer = null; // 当前绘制图层
 let markerLayerArr = []; // 边界名称标签集合
 let drawSpaceList = ref([]); // 绘制图形列表
+let drawToolType = ref(null);
+
 const eventListMap = {
   combine: handleCombineDownload,
   batch: handleBacthDownload,
@@ -146,9 +148,16 @@ onMounted(() => {
 const operationChange = (val) => {
   if (val === "clear") {
     removeLayers();
+  } else if (val === "down") {
+    handleDown();
   } else {
     handleDownload(val);
   }
+};
+
+const handleDown = () => {
+  drawSpaceObj.exitDraw();
+  drawToolType.value.resetShape();
 };
 
 const handleDownload = (type) => {
@@ -192,7 +201,6 @@ const initDrawToolHandle = () => {
     if (param.coordinate) {
       showTooltip(param.containerPoint.x, param.containerPoint.y);
       drawSpaceObj.changeShowTooltip(true);
-      // markerLayer.addGeometry(currDrawLayer)
       currLayer = currDrawLayer;
       // 添加geometry到矢量图层
       currDrawLayer.addTo(drawSpaceLayer);
@@ -207,7 +215,7 @@ const removeLayers = () => {
       marker?.remove();
     });
   }
-  // drawSpaceList.value = []
+  drawSpaceList.value = [];
 };
 
 onBeforeUnmount(() => {

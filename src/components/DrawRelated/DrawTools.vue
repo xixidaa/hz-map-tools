@@ -8,8 +8,14 @@
 <template>
   <DrawToolContainer position="left">
     <div class="draw-tool-btn-wrapper">
+      <el-button @click="handleClick('down')">完成</el-button>
       <el-button @click="handleClick('clear')">清空</el-button>
-      <el-popover :show-arrow="false" placement="top-start" trigger="hover" popper-class="download-btn">
+      <el-popover
+        :show-arrow="false"
+        placement="top-start"
+        trigger="hover"
+        popper-class="download-btn"
+      >
         <template #reference>
           <el-button>下载json</el-button>
         </template>
@@ -21,12 +27,12 @@
 </template>
 
 <script setup>
-const emit = defineEmits(['operationChange'])
+const emit = defineEmits(["operationChange"]);
 const handleClick = (type) => {
   if (type) {
-    emit('operationChange', type)
+    emit("operationChange", type);
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

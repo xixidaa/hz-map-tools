@@ -13,9 +13,10 @@
 <script setup></script>
 
 <style lang="scss">
-@import './host.scss';
+@import "./host.scss";
 .hz-ce-button {
-  --hz-button-bg-color: #fff;
+  --hz-button-bg-color: rgba(36, 39, 48, 0.7);
+  --hz-button-text-color: rgba(255, 255, 255, 0.5);
   margin-left: 12px;
   display: inline-flex;
   justify-content: center;
@@ -24,7 +25,7 @@
   height: 32px;
   white-space: nowrap;
   cursor: pointer;
-  color: var(--el-button-text-color);
+  color: var(--hz-button-text-color);
   text-align: center;
   box-sizing: border-box;
   outline: none;
@@ -44,7 +45,7 @@
 .hz-ce-button:focus {
   color: var(--el-button-hover-text-color);
   border-color: var(--el-button-hover-border-color);
-  background-color: var(--el-button-hover-bg-color);
+  background-color: var(--hz-button-bg-color);
   outline: none;
 }
 </style>

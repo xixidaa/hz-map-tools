@@ -7,19 +7,29 @@
 -->
 <template>
   <DrawToolContainer>
-    <div @click="drawShape('Circle')" :class="shapeKey == 'Circle' && 'space-select-active'">
+    <div
+      @click="drawShape('Circle')"
+      :class="shapeKey == 'Circle' && 'space-select-active'"
+    >
       <span>
         <SvgIcon name="circle" class="space-icon common-icon-middle"></SvgIcon>
       </span>
       <span>圆形</span>
     </div>
-    <div @click="drawShape('Rectangle')" :class="shapeKey == 'Rectangle' && 'space-select-active'">
+    <div
+      @click="drawShape('Rectangle')"
+      :class="shapeKey == 'Rectangle' && 'space-select-active'"
+    >
       <span>
         <SvgIcon name="react" class="space-icon common-icon-middle"></SvgIcon>
       </span>
       <span>矩形</span>
     </div>
-    <div title="双击完成绘制" @click="drawShape('Polygon')" :class="shapeKey == 'Polygon' && 'space-select-active'">
+    <div
+      title="双击完成绘制"
+      @click="drawShape('Polygon')"
+      :class="shapeKey == 'Polygon' && 'space-select-active'"
+    >
       <span>
         <SvgIcon name="user_define" class="space-icon common-icon-middle"></SvgIcon>
       </span>
@@ -29,14 +39,21 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-const shapeKey = ref('')
-const emit = defineEmits(['drawToolValueChange'])
+import { ref } from "vue";
+const emit = defineEmits(["drawToolValueChange"]);
 
+const shapeKey = ref("");
 const drawShape = (val) => {
-  shapeKey.value = val
-  emit('drawToolValueChange', val)
-}
+  shapeKey.value = val;
+  emit("drawToolValueChange", val);
+};
+const resetShape = () => {
+  shapeKey.value = "";
+};
+// 子组件方法暴露给父组件;
+defineExpose({
+  resetShape,
+});
 </script>
 
 <style lang="scss" scoped>

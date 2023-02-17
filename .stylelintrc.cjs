@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2022-12-27 19:43:29
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-08 17:49:09
+ * @LastEditTime: 2023-02-17 15:19:41
  * @FilePath: /hz-map-tools/.stylelintrc.cjs
  */
 module.exports = {
@@ -34,6 +34,7 @@ module.exports = {
     'declaration-empty-line-before': null,
     'max-line-length': null,
     'alpha-value-notation': null,
-    'custom-property-empty-line-before': null
+    'custom-property-empty-line-before': null,
+    'string-quotes': null
   }
 }
