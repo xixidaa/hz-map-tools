@@ -26,17 +26,19 @@
 
 <script setup>
 import { ref, inject, onUnmounted, onMounted } from "vue";
+import { VectorLayer, GeoJSON } from "maptalks";
 import { PROVINCE_COORDINATES_MAP } from "utils/constent";
-import { GeoJSONVectorTileLayer, GroupGLLayer } from "@maptalks/gl-layers";
+import bbox from "@turf/bbox";
+// import { GeoJSONVectorTileLayer, GroupGLLayer } from "@maptalks/gl-layers";
 
 let map = inject("map");
-let groupLayer = null;
+// let groupLayer = null;
 let geoLayer = null;
 const selectCity = ref("");
 
 onMounted(() => {
-  groupLayer = !groupLayer && new GroupGLLayer("group", []).addTo(map);
-  geoLayer = !geoLayer && new GeoJSONVectorTileLayer("geoLayer", {});
+  // groupLayer = !groupLayer && new GroupGLLayer("group", []).addTo(map);
+  geoLayer = !geoLayer && new VectorLayer("geoLayer", {}).addTo(map);
 });
 
 const handleCityChange = (city) => {
@@ -70,49 +72,65 @@ const flyToArea = async (currSelectCity = {}) => {
   }
 };
 const removeGeojson = () => {
-  if (groupLayer) {
-    groupLayer.removeLayer("geoLayer");
-  }
+  // if (groupLayer) {
+  //   groupLayer.removeLayer("geoLayer");
+  // }
+  geoLayer && geoLayer.clear();
 };
 
 const drawGeojson = (geojson = "") => {
   removeGeojson();
-
-  const style = {
-    style: [
-      {
-        renderPlugin: {
-          dataConfig: {
-            type: "fill",
-          },
-          type: "fill",
-        },
-        symbol: {
-          polygonBloom: false,
-          polygonFill: "rgb(44, 63, 76)",
-          polygonOpacity: 0.5,
-        },
-      },
-    ],
-  };
-
-  try {
-    geoLayer.setData(geojson);
-    geoLayer.setStyle(style);
-  } catch (error) {
-    console.log(error, "cc");
+  // 方式一: 使用GeoJSON绘制
+  const extent = bbox(geojson);
+  let geojsonGeometry = GeoJSON.toGeometry(geojson);
+  if (Array.isArray(geojsonGeometry)) {
+    geojsonGeometry = geojsonGeometry[0];
   }
-
-  geoLayer.on("dataload", (e) => {
-    map.fitExtent(e.extent);
+  geojsonGeometry.updateSymbol({
+    lineWidth: 1,
+    lineColor: "rgba(20, 190, 120, 1)",
+    lineOpacity: 0.5,
+    polygonFill: "rgb(44, 63, 76)",
+    polygonOpacity: 0.1,
   });
+  geojsonGeometry.addTo(geoLayer);
+  map.fitExtent(extent);
 
-  groupLayer.addLayer(geoLayer);
+  // 方式二： 使用gl图层绘制，现阶段会出现webgl上下文丢失的问题，且gl图层构建后包体积过大
+  // const style = {
+  //   style: [
+  //     {
+  //       renderPlugin: {
+  //         dataConfig: {
+  //           type: "fill",
+  //         },
+  //         type: "fill",
+  //       },
+  //       symbol: {
+  //         polygonBloom: false,
+  //         polygonFill: "rgb(44, 63, 76)",
+  //         polygonOpacity: 0.5,
+  //       },
+  //     },
+  //   ],
+  // };
+  // try {
+  //   geoLayer.setData(geojson);
+  //   geoLayer.setStyle(style);
+  // } catch (error) {
+  //   console.log(error, "cc");
+  // }
+
+  // geoLayer.on("dataload", (e) => {
+  //   map.fitExtent(e.extent);
+  // });
+
+  // groupLayer.addLayer(geoLayer);
 };
 
 onUnmounted(() => {
   removeGeojson();
-  groupLayer && groupLayer.remove();
+  // groupLayer && groupLayer.remove();
 });
 </script>
 
