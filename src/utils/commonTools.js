@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2022-12-28 19:34:11
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-16 19:34:15
+ * @LastEditTime: 2023-02-20 10:47:57
  * @FilePath: /hz-map-tools/src/utils/commonTools.js
  * @Desc: 双向映射Map
  */
@@ -35,8 +35,8 @@ export class TwoWayMap extends Map {
 }
 
 // 随机字符串
-export const randomStr = () => {
-  return Math.random().toString(16).substr(2, 6)
+export const randomStr = (digit = 6) => {
+  return Math.random().toString(16).substr(2, digit)
 }
 
 // 判断文本类型

@@ -42,7 +42,7 @@ import { inject, onMounted, onBeforeUnmount, reactive, ref } from "vue";
 import { VectorLayer } from "maptalks";
 import UserDefineArea from "comps/DrawRelated/userDefineArea.js";
 import { ElMessage } from "element-plus";
-import { handleCombineDownload, handleBacthDownload } from "utils/commonTools";
+import { handleCombineDownload, handleBacthDownload, randomStr } from "utils/commonTools";
 
 let map = inject("map");
 let drawSpaceObj = new UserDefineArea("drawSpaceLayer");
@@ -66,7 +66,7 @@ const tooltipData = reactive({
     left: "100px",
     top: "300px",
   },
-  adcode: 0,
+  adcode: "",
 });
 
 const buttonStatus = (val) => {
@@ -85,13 +85,14 @@ const buttonStatus = (val) => {
       const geojson = currLayer._geometries[0].toGeoJSON();
       const name = tooltipData.name;
       const adcode = tooltipData.adcode;
+      let ran_adcode = `geo${randomStr(4)}-${adcode}`;
       geojson.properties = {
         name,
-        adcode,
+        adcode: ran_adcode,
       };
       const json = {
         name,
-        adcode,
+        adcode: ran_adcode,
         geojson,
       };
       drawSpaceList.value.push({

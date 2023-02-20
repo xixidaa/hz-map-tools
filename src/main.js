@@ -17,8 +17,8 @@ import './assets/main.css'
 import '../node_modules/maptalks/dist/maptalks.css'
 import './assets/coverElement.scss'
 import 'utils/nprogress.js'
-import { register } from 'comps/CustomElementComps/index'
-register('hz-ce-button')
+import { registerAll } from 'comps/CustomElementComps/index'
+registerAll()
 
 const app = createApp(App)
 

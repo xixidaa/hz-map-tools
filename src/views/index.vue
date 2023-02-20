@@ -22,12 +22,49 @@
     </el-header>
     <el-main class="main-container">
       <router-view></router-view>
+      <!-- <WaterMark></WaterMark> -->
+      <div ref="ceWaterMark">
+        <hz-ce-watermark></hz-ce-watermark>
+      </div>
     </el-main>
   </el-container>
 </template>
 
 <script setup>
-// import { onMounted } from 'vue'
+// import { onMounted, ref } from "vue";
+
+// const ceWaterMark = ref(null); // 自定义水印dom
+// onMounted(() => {
+//   waterMarkObserver();
+// });
+// const waterMarkObserver = () => {
+//   const ceWaterMarkRt = ceWaterMark.value;
+//   let options = {
+//     childList: true, //观察目标节点的子节点的新增和删除中)
+//     subtree: true,
+//   };
+//   const checkWaterNode = (removedNodes) => {
+//     const removedNodesArr = Array.from(removedNodes);
+//     if (removedNodesArr) {
+//       const waterNode = removedNodesArr.filter((item) => {
+//         return item.id === "water-mark";
+//       });
+//       return waterNode.length > 0;
+//     }
+//   };
+//   const callback = (records) => {
+//     records.forEach((record) => {
+//       // id: "water-mark"
+//       if (checkWaterNode(record.removedNodes)) {
+//         const { removedNodes, target } = record;
+//         const waterMarkDom = removedNodes[0];
+//         target.appendChild(waterMarkDom);
+//       }
+//     });
+//   };
+//   const observer = new MutationObserver(callback);
+//   observer.observe(ceWaterMarkRt, options);
+// };
 </script>
 
 <style lang="scss" scoped>

@@ -8,12 +8,6 @@
 <template>
   <div class="geojson-valid-wrrap">
     <div class="geojson-textarea">
-      <!-- <el-input
-        v-model="textarea"
-        :rows="2"
-        type="textarea"
-        placeholder="请输入需要校验的geojson"
-      /> -->
       <div id="jsoneditor" style="width: 100%; height: 100%"></div>
     </div>
     <div class="valid-btn-box">
