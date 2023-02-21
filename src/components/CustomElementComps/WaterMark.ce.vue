@@ -16,7 +16,6 @@ import { onMounted, ref } from "vue";
 onMounted(() => {
   initWaterMark();
   resize();
-  // waterMarkObserver();
 });
 
 const waterMarkRef = ref(null);
@@ -26,18 +25,6 @@ const resize = () => {
     initWaterMark();
   };
 };
-// const waterMarkObserver = () => {
-//   let options = {
-//     childList: true, //观察目标节点的子节点的新增和删除中)
-//     subtree: true,
-//   };
-//   const callback = (records, instance) => {
-//     console.log(records, "records");
-//     console.log(instance, "instance");
-//   };
-//   const observer = new MutationObserver(callback);
-//   observer.observe(document.body, options);
-// };
 
 const initWaterMark = () => {
   let canvas = waterMarkRef.value;

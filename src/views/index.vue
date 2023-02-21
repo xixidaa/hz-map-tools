@@ -22,10 +22,9 @@
     </el-header>
     <el-main class="main-container">
       <router-view></router-view>
-      <!-- <WaterMark></WaterMark> -->
-      <div ref="ceWaterMark">
-        <hz-ce-watermark></hz-ce-watermark>
-      </div>
+      <WaterMark></WaterMark>
+
+      <!-- <hz-ce-watermark ref="ceWaterMark"></hz-ce-watermark> -->
     </el-main>
   </el-container>
 </template>
@@ -38,7 +37,7 @@
 //   waterMarkObserver();
 // });
 // const waterMarkObserver = () => {
-//   const ceWaterMarkRt = ceWaterMark.value;
+//   const ceWaterMarkRt = ceWaterMark.value.shadowRoot;
 //   let options = {
 //     childList: true, //观察目标节点的子节点的新增和删除中)
 //     subtree: true,
@@ -54,7 +53,7 @@
 //   };
 //   const callback = (records) => {
 //     records.forEach((record) => {
-//       // id: "water-mark"
+//       console.log(record, "record");
 //       if (checkWaterNode(record.removedNodes)) {
 //         const { removedNodes, target } = record;
 //         const waterMarkDom = removedNodes[0];
