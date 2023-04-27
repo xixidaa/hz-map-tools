@@ -7,17 +7,11 @@
 -->
 <template>
   <div class="nav-container">
-    <el-menu
-      :default-active="rootStore.currNav"
-      mode="horizontal"
-      background-color="#545c64"
-      text-color="#fff"
-      active-text-color="#ffd04b"
-      @select="handleSelect"
-    >
+    <el-menu :default-active="rootStore.currNav" mode="horizontal" background-color="#545c64" text-color="#fff"
+      active-text-color="#ffd04b" @select="handleSelect">
       <el-menu-item index="1">行政边界编辑器</el-menu-item>
       <el-menu-item index="2">点位拾取器</el-menu-item>
-      <el-menu-item index="3">飞线编辑器</el-menu-item>
+      <!-- <el-menu-item index="3">飞线编辑器</el-menu-item> -->
       <el-menu-item index="4">geojson校验</el-menu-item>
       <el-menu-item index="5">wkt&geojson互转</el-menu-item>
     </el-menu>
@@ -57,9 +51,11 @@ const handleSelect = (value) => {
 <style lang="scss" scoped>
 .nav-container {
   height: 100%;
+
   :deep(.el-menu-item) {
     height: 40px;
   }
+
   :deep(.el-menu--horizontal) {
     border: none;
   }

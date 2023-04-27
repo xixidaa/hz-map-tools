@@ -16,10 +16,6 @@
     "*.{js,jsx,vue}": [
       "npm run lint",
       "git add ."
-    ],
-    "**/*.{scss,css}": [
-      "npm run lint:style",
-      "git add ."
     ]
   },
   "dependencies": {

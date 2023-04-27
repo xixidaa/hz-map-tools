@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2022-12-27 14:36:37
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-14 15:49:43
+ * @LastEditTime: 2023-04-24 12:09:08
  * @FilePath: /hz-map-tools/vite.config.js
  * @Description:
  */
@@ -73,7 +73,7 @@ export default defineConfig({
     Icons({
       autoInstall: true
     }),
-    viteStylelint(),
+    // viteStylelint(),
     createSvgIconsPlugin({
       // 指定需要缓存的图标文件夹
       iconDirs: [path.resolve(process.cwd(), 'src/assets/svg')],

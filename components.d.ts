@@ -8,7 +8,6 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     'Button.ce': typeof import('./src/components/CustomElementComps/Button.ce.vue')['default']
-    copy: typeof import('./src/components/CustomElementComps/WaterMark.ce copy.vue')['default']
     DrawToolContainer: typeof import('./src/components/DrawRelated/DrawToolContainer.vue')['default']
     DrawTools: typeof import('./src/components/DrawRelated/DrawTools.vue')['default']
     DrawToolType: typeof import('./src/components/DrawRelated/DrawToolType.vue')['default']
@@ -44,10 +43,7 @@ declare module '@vue/runtime-core' {
     SpaceDrawContainer: typeof import('./src/components/SpaceDrawContainer.vue')['default']
     SpaceTooltip: typeof import('./src/components/DrawRelated/SpaceTooltip.vue')['default']
     SvgIcon: typeof import('./src/components/SvgIcon.vue')['default']
-    'Wa1termark.ce': typeof import('./src/components/CustomElementComps/Wa1termark.ce.vue')['default']
     WaterMark: typeof import('./src/components/CustomElementComps/WaterMark.vue')['default']
-    'Watermark.ce': typeof import('./src/components/CustomElementComps/Watermark.ce.vue')['default']
     'WaterMark.ce': typeof import('./src/components/CustomElementComps/WaterMark.ce.vue')['default']
-    WaterMarkxw: typeof import('./src/components/CustomElementComps/WaterMarkxw.vue')['default']
   }
 }

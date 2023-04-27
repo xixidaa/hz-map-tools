@@ -2,7 +2,7 @@
  * @Author: WangNing
  * @Date: 2023-02-02 10:28:37
  * @LastEditors: WangNing
- * @LastEditTime: 2023-02-02 10:49:39
+ * @LastEditTime: 2023-03-13 20:42:56
  * @FilePath: /hz-map-tools/git.commit.mjs
  */
 import { execSync } from 'child_process'
