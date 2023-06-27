@@ -6,7 +6,7 @@
  * @FilePath: /hz-map-tools/src/hooks/useGeojsonValidate.js
  */
 import { ref } from 'vue'
-import geojsonhint from '@mapbox/geojsonhintesm/geojsonhint.esm'
+import geojsonhint from 'geojsonhintesm'
 
 export const useGeojsonValidate = () => {
   const errContent = ref([])

@@ -19,7 +19,6 @@
     ]
   },
   "dependencies": {
-    "@mapbox/geojsonhintesm": "^3.1.8",
     "@maptalks/gl": "^0.80.0",
     "@maptalks/gl-layers": "^0.17.0",
     "@maptalks/vt": "^0.78.2",
@@ -30,6 +29,7 @@
     "chalk": "^5.2.0",
     "element-plus": "^2.2.27",
     "file-saver": "^2.0.5",
+    "geojsonhintesm": "^1.0.2",
     "is-wkt": "^0.0.1",
     "jsoneditor": "^9.9.2",
     "jszip": "^3.10.1",
@@ -43,7 +43,7 @@
     "sass": "^1.57.1",
     "stylelint-prettier": "^2.0.0",
     "unplugin-icons": "^0.15.1",
-    "vite": "^4.1.1",
+    "vite": "^4.3.9",
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-svg-icons": "^2.0.1",
     "vue": "^3.3.0-alpha.4",
@@ -53,6 +53,7 @@
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
     "@iconify-json/ep": "^1.1.8",
+    "@originjs/vite-plugin-commonjs": "^1.0.3",
     "@rushstack/eslint-patch": "^1.1.4",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/eslint-config-prettier": "^7.0.0",
