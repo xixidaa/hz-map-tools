@@ -29,7 +29,7 @@
     "chalk": "^5.2.0",
     "element-plus": "^2.2.27",
     "file-saver": "^2.0.5",
-    "geojsonhintesm": "^1.0.2",
+    "geojsonhintesm": "^1.0.5",
     "is-wkt": "^0.0.1",
     "jsoneditor": "^9.9.2",
     "jszip": "^3.10.1",

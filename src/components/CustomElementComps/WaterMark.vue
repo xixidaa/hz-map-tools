@@ -7,12 +7,12 @@
  * @Desc: 无法删除的水印方案二：创建普通组件，在组件内部通过MutationObserver监听到webcomp被删除，将拦截此次dom删除并重新添加回当前位置
 -->
 <template>
-  <canvas id="water-mark"></canvas>
+  <canvas ref="waterMarkRef" id="water-mark"></canvas>
 </template>
 
 <script setup>
 import { debounce } from "lodash-es";
-import { onBeforeUnmount, onMounted } from "vue";
+import { onBeforeUnmount, onMounted, ref } from "vue";
 
 const props = defineProps({
   waterText: {
@@ -26,6 +26,8 @@ const props = defineProps({
 });
 
 let waterObserver = null;
+// let resizeObserver = null;
+const waterMarkRef = ref(null)
 
 onMounted(() => {
   initWaterMark();
@@ -35,11 +37,14 @@ onMounted(() => {
 
 // 监听页面变化重新绘制水印;
 const resize = () => {
+  // resizeObserver = new ResizeObserver(debounce(initWaterMark, 100))
+  // resizeObserver.observe(waterMarkRef.value)
   window.addEventListener("resize", debounce(initWaterMark, 100));
 };
 
 // 生成水印
 const initWaterMark = () => {
+  console.log('chufa')
   let canvas = document.getElementById("water-mark");
   const cltWidth = canvas.clientWidth;
   const cltHeight = canvas.clientHeight;
@@ -98,7 +103,7 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss" scoped>
-#water-mark {
+#water-mark#water-mark {
   width: 100%;
   height: 100%;
   position: absolute;
